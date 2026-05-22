@@ -10,7 +10,7 @@ st.set_page_config(
 st.markdown("""
 <style>
     .stApp {
-        background: #faf8ff;
+        background: white;
     }
 
     section[data-testid="stSidebar"] {
@@ -74,7 +74,7 @@ menu = st.sidebar.radio(
 
 # Dashboard
 if menu == "Dashboard":
-    st.markdown('<div class="main-title">Olá, Bea.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">Olá, Time.</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Aqui está o panorama da assessoria hoje.</div>', unsafe_allow_html=True)
 
     c1, c2, c3, c4 = st.columns(4)
