@@ -1,22 +1,16 @@
-from pathlib import Path
-
-code = r'''import streamlit as st
-
-# ======================================================
-# ZOY ASSESSORIA — APP ESTÁVEL
-# ======================================================
+import streamlit as st
 
 st.set_page_config(
-    page_title="Zoy Assessoria",
-    page_icon="💜",
-    layout="wide"
+    page_title='Zoy Assessoria',
+    page_icon='💜',
+    layout='wide'
 )
 
 # ======================================================
 # CSS
 # ======================================================
 
-st.markdown("""
+st.markdown('''
 <style>
     .stApp {
         background-color: #FFFFFF;
@@ -259,16 +253,6 @@ st.markdown("""
         display: inline-block;
     }
 
-    .badge-green {
-        background: #E8F8ED;
-        color: #148A42;
-        padding: 7px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 850;
-        display: inline-block;
-    }
-
     .campaign-table {
         width: 100%;
         border-collapse: collapse;
@@ -322,7 +306,7 @@ st.markdown("""
         color: #6F2DE2 !important;
     }
 </style>
-""", unsafe_allow_html=True)
+''', unsafe_allow_html=True)
 
 # ======================================================
 # SIDEBAR
@@ -332,97 +316,97 @@ st.sidebar.markdown('<div class="zoy-title">zoy</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<div class="zoy-subtitle">ASSESSORIA</div>', unsafe_allow_html=True)
 
 menu = st.sidebar.radio(
-    "Menu",
-    ["Dashboard", "Influenciadores", "Planejamento", "Projetos"],
-    label_visibility="collapsed"
+    'Menu',
+    ['Dashboard', 'Influenciadores', 'Planejamento', 'Projetos'],
+    label_visibility='collapsed'
 )
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Jean**")
-st.sidebar.caption("Responsável")
+st.sidebar.markdown('---')
+st.sidebar.markdown('**Jean**')
+st.sidebar.caption('Responsável')
 
 # ======================================================
 # DADOS MOCKADOS
 # ======================================================
 
 creators_data = {
-    "Jady Carvalho": {
-        "initials": "JC",
-        "handle": "@jadycarvalho",
-        "nicho": "Lifestyle • Beleza • Humor",
-        "cidade": "São Paulo, SP",
-        "status": "Ativo",
-        "email": "jadycarvalho@gmail.com",
-        "telefone": "(11) 99999-9999",
-        "aniversario": "12/03",
-        "posicionamento": "Lifestyle real, rotina espontânea, beleza leve e humor do dia a dia.",
-        "obs": "Tem ótima entrega em Reels. Público jovem e muito engajado.",
-        "seguidores": "132K",
-        "alcance": "48K",
-        "stories": "18K",
-        "engajamento": "4,2%",
-        "tags": ["Lifestyle", "Beleza", "Humor"]
+    'Jady Carvalho': {
+        'initials': 'JC',
+        'handle': '@jadycarvalho',
+        'nicho': 'Lifestyle • Beleza • Humor',
+        'cidade': 'São Paulo, SP',
+        'status': 'Ativo',
+        'email': 'jadycarvalho@gmail.com',
+        'telefone': '(11) 99999-9999',
+        'aniversario': '12/03',
+        'posicionamento': 'Lifestyle real, rotina espontânea, beleza leve e humor do dia a dia.',
+        'obs': 'Tem ótima entrega em Reels. Público jovem e muito engajado.',
+        'seguidores': '132K',
+        'alcance': '48K',
+        'stories': '18K',
+        'engajamento': '4,2%',
+        'tags': ['Lifestyle', 'Beleza', 'Humor']
     },
-    "Malu Borges": {
-        "initials": "MB",
-        "handle": "@maluborges",
-        "nicho": "Fashion • Lifestyle",
-        "cidade": "São Paulo, SP",
-        "status": "Ativo",
-        "email": "malu@email.com",
-        "telefone": "(11) 98888-8888",
-        "aniversario": "04/08",
-        "posicionamento": "Moda urbana, lifestyle aspiracional e rotina criativa.",
-        "obs": "Boa aderência para marcas de moda e beleza.",
-        "seguidores": "89K",
-        "alcance": "31K",
-        "stories": "12K",
-        "engajamento": "3,8%",
-        "tags": ["Moda", "Lifestyle", "Beauty"]
+    'Malu Borges': {
+        'initials': 'MB',
+        'handle': '@maluborges',
+        'nicho': 'Fashion • Lifestyle',
+        'cidade': 'São Paulo, SP',
+        'status': 'Ativo',
+        'email': 'malu@email.com',
+        'telefone': '(11) 98888-8888',
+        'aniversario': '04/08',
+        'posicionamento': 'Moda urbana, lifestyle aspiracional e rotina criativa.',
+        'obs': 'Boa aderência para marcas de moda e beleza.',
+        'seguidores': '89K',
+        'alcance': '31K',
+        'stories': '12K',
+        'engajamento': '3,8%',
+        'tags': ['Moda', 'Lifestyle', 'Beauty']
     },
-    "Vitória Guedes": {
-        "initials": "VG",
-        "handle": "@vitoriaguedes",
-        "nicho": "Beauty • Skincare",
-        "cidade": "Rio de Janeiro, RJ",
-        "status": "Ativo",
-        "email": "vitoria@email.com",
-        "telefone": "(21) 97777-7777",
-        "aniversario": "22/01",
-        "posicionamento": "Beleza acessível, skincare e rotina feminina.",
-        "obs": "Boa entrega em stories e reviews.",
-        "seguidores": "76K",
-        "alcance": "22K",
-        "stories": "9K",
-        "engajamento": "3,1%",
-        "tags": ["Beauty", "Skincare", "Review"]
+    'Vitória Guedes': {
+        'initials': 'VG',
+        'handle': '@vitoriaguedes',
+        'nicho': 'Beauty • Skincare',
+        'cidade': 'Rio de Janeiro, RJ',
+        'status': 'Ativo',
+        'email': 'vitoria@email.com',
+        'telefone': '(21) 97777-7777',
+        'aniversario': '22/01',
+        'posicionamento': 'Beleza acessível, skincare e rotina feminina.',
+        'obs': 'Boa entrega em stories e reviews.',
+        'seguidores': '76K',
+        'alcance': '22K',
+        'stories': '9K',
+        'engajamento': '3,1%',
+        'tags': ['Beauty', 'Skincare', 'Review']
     }
 }
 
 campaigns = [
     {
-        "marca": "Adidas",
-        "campanha": "Always On",
-        "entrega": "3 Reels + 6 Stories",
-        "prazo": "25/05",
-        "status": "Produção",
-        "badge": "badge-purple"
+        'marca': 'Adidas',
+        'campanha': 'Always On',
+        'entrega': '3 Reels + 6 Stories',
+        'prazo': '25/05',
+        'status': 'Produção',
+        'badge': 'badge-purple'
     },
     {
-        "marca": "Lipton",
-        "campanha": "Verão 2025",
-        "entrega": "2 Stories + 1 Reel",
-        "prazo": "30/05",
-        "status": "Aprovação",
-        "badge": "badge-orange"
+        'marca': 'Lipton',
+        'campanha': 'Verão 2025',
+        'entrega': '2 Stories + 1 Reel',
+        'prazo': '30/05',
+        'status': 'Aprovação',
+        'badge': 'badge-orange'
     },
     {
-        "marca": "FINI",
-        "campanha": "Doces Momentos",
-        "entrega": "2 Reels + 4 Stories",
-        "prazo": "15/06",
-        "status": "Negociação",
-        "badge": "badge-blue"
+        'marca': 'FINI',
+        'campanha': 'Doces Momentos',
+        'entrega': '2 Reels + 4 Stories',
+        'prazo': '15/06',
+        'status': 'Negociação',
+        'badge': 'badge-blue'
     }
 ]
 
@@ -430,17 +414,17 @@ campaigns = [
 # DASHBOARD
 # ======================================================
 
-if menu == "Dashboard":
+if menu == 'Dashboard':
     st.markdown('<div class="page-title">Olá, Jean.</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Aqui está o panorama da assessoria hoje.</div>', unsafe_allow_html=True)
 
     col1, col2, col3, col4 = st.columns(4)
 
     dashboard_cards = [
-        ("Creators ativos", "12"),
-        ("Parcerias em andamento", "9"),
-        ("Conteúdos pendentes", "17"),
-        ("Reuniões da semana", "6")
+        ('Creators ativos', '12'),
+        ('Parcerias em andamento', '9'),
+        ('Conteúdos pendentes', '17'),
+        ('Reuniões da semana', '6')
     ]
 
     for col, (title, number) in zip([col1, col2, col3, col4], dashboard_cards):
@@ -455,7 +439,7 @@ if menu == "Dashboard":
                 unsafe_allow_html=True
             )
 
-    st.markdown("### Parcerias em andamento")
+    st.markdown('### Parcerias em andamento')
 
     p1, p2, p3 = st.columns(3)
 
@@ -499,7 +483,7 @@ if menu == "Dashboard":
 # INFLUENCIADORES
 # ======================================================
 
-elif menu == "Influenciadores":
+elif menu == 'Influenciadores':
 
     header_left, header_right = st.columns([5, 1.2])
 
@@ -511,27 +495,27 @@ elif menu == "Influenciadores":
         )
 
     with header_right:
-        st.button("+ Novo influenciador", use_container_width=True)
+        st.button('+ Novo influenciador', use_container_width=True)
 
-    left, right = st.columns([1.05, 3.4], gap="large")
+    left, right = st.columns([1.05, 3.4], gap='large')
 
     with left:
         st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
         st.text_input(
-            "Buscar influenciador",
-            placeholder="Buscar influenciador...",
-            label_visibility="collapsed"
+            'Buscar influenciador',
+            placeholder='Buscar influenciador...',
+            label_visibility='collapsed'
         )
 
         selected_creator = st.radio(
-            "Influenciadores",
+            'Influenciadores',
             list(creators_data.keys()),
-            label_visibility="collapsed"
+            label_visibility='collapsed'
         )
 
         for name, data in creators_data.items():
-            card_class = "creator-list-card-active" if name == selected_creator else "creator-list-card"
-            status_class = "status-active" if data["status"] == "Ativo" else "status-paused"
+            card_class = 'creator-list-card-active' if name == selected_creator else 'creator-list-card'
+            status_class = 'status-active' if data['status'] == 'Ativo' else 'status-paused'
 
             st.markdown(
                 f'''
@@ -557,7 +541,7 @@ elif menu == "Influenciadores":
     creator = creators_data[selected_creator]
 
     with right:
-        status_class = "status-active" if creator["status"] == "Ativo" else "status-paused"
+        status_class = 'status-active' if creator['status'] == 'Ativo' else 'status-paused'
 
         profile_col_1, profile_col_2 = st.columns([4, 1.2])
 
@@ -594,16 +578,16 @@ elif menu == "Influenciadores":
             )
 
         tabs = st.tabs([
-            "Visão geral",
-            "Métricas",
-            "Campanhas ativas",
-            "Acompanhamento",
-            "Histórico",
-            "Documentos"
+            'Visão geral',
+            'Métricas',
+            'Campanhas ativas',
+            'Acompanhamento',
+            'Histórico',
+            'Documentos'
         ])
 
         with tabs[0]:
-            col_a, col_b = st.columns([1.1, 1.9], gap="large")
+            col_a, col_b = st.columns([1.1, 1.9], gap='large')
 
             with col_a:
                 st.markdown(
@@ -633,7 +617,7 @@ elif menu == "Influenciadores":
                     unsafe_allow_html=True
                 )
 
-                tag_html = "".join([f'<span class="pill">{tag}</span>' for tag in creator["tags"]])
+                tag_html = ''.join([f'<span class="pill">{tag}</span>' for tag in creator['tags']])
                 st.markdown(
                     f'<div style="margin-top:-8px;">{tag_html}</div>',
                     unsafe_allow_html=True
@@ -645,10 +629,10 @@ elif menu == "Influenciadores":
                 m1, m2, m3, m4 = st.columns(4)
 
                 metric_items = [
-                    ("Seguidores", creator["seguidores"], "↑ 2,3%"),
-                    ("Alcance médio", creator["alcance"], "↑ 8,1%"),
-                    ("Views Stories", creator["stories"], "↑ 5,2%"),
-                    ("Engajamento", creator["engajamento"], "↑ 0,6%")
+                    ('Seguidores', creator['seguidores'], '↑ 2,3%'),
+                    ('Alcance médio', creator['alcance'], '↑ 8,1%'),
+                    ('Views Stories', creator['stories'], '↑ 5,2%'),
+                    ('Engajamento', creator['engajamento'], '↑ 0,6%')
                 ]
 
                 for col, (label, value, growth) in zip([m1, m2, m3, m4], metric_items):
@@ -665,10 +649,10 @@ elif menu == "Influenciadores":
                             unsafe_allow_html=True
                         )
 
-                st.markdown("<br>", unsafe_allow_html=True)
+                st.markdown('<br>', unsafe_allow_html=True)
                 st.markdown('<div class="section-title">Campanhas ativas</div>', unsafe_allow_html=True)
 
-                rows = ""
+                rows = ''
                 for item in campaigns:
                     rows += f'''
                     <tr>
@@ -761,33 +745,33 @@ elif menu == "Influenciadores":
 # PLANEJAMENTO
 # ======================================================
 
-elif menu == "Planejamento":
+elif menu == 'Planejamento':
     st.markdown('<div class="page-title">Planejamento</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="page-subtitle">Organize metas, conteúdos e entregas mensais.</div>',
         unsafe_allow_html=True
     )
 
-    st.selectbox("Influenciador", list(creators_data.keys()))
-    st.text_input("Objetivo do mês", "Crescimento + Engajamento")
+    st.selectbox('Influenciador', list(creators_data.keys()))
+    st.text_input('Objetivo do mês', 'Crescimento + Engajamento')
 
     st.text_area(
-        "Estratégia",
-        "Foco em lifestyle espontâneo, rotina real e conteúdos mais conversados."
+        'Estratégia',
+        'Foco em lifestyle espontâneo, rotina real e conteúdos mais conversados.'
     )
 
     c1, c2, c3, c4 = st.columns(4)
 
-    c1.number_input("Reels", value=4)
-    c2.number_input("Stories", value=12)
-    c3.number_input("Collabs", value=1)
-    c4.number_input("Publis", value=1)
+    c1.number_input('Reels', value=4)
+    c2.number_input('Stories', value=12)
+    c3.number_input('Collabs', value=1)
+    c4.number_input('Publis', value=1)
 
 # ======================================================
 # PROJETOS
 # ======================================================
 
-elif menu == "Projetos":
+elif menu == 'Projetos':
     st.markdown('<div class="page-title">Projetos</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="page-subtitle">Acompanhe parcerias, campanhas e entregas comerciais.</div>',
@@ -843,8 +827,3 @@ elif menu == "Projetos":
             ''',
             unsafe_allow_html=True
         )
-'''
-
-path = Path("/mnt/data/app_zoy_assessoria_estavel.py")
-path.write_text(code, encoding="utf-8")
-path.as_posix()
