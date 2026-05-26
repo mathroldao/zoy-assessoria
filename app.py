@@ -1,6 +1,4 @@
-from pathlib import Path
-
-code = """import streamlit as st
+import streamlit as st
 import pandas as pd
 
 st.set_page_config(
@@ -538,8 +536,3 @@ elif menu == "Projetos":
         st.markdown('<div class="card"><div class="section-title">Produção</div><p>Adidas</p><p>Lipton</p></div>', unsafe_allow_html=True)
     with c4:
         st.markdown('<div class="card"><div class="section-title">Finalizado</div><p>Azul</p><p>Natura</p></div>', unsafe_allow_html=True)
-"""
-
-path = Path("/mnt/data/app_zoy_assessoria_estavel_v2.py")
-path.write_text(code, encoding="utf-8")
-path.as_posix()
