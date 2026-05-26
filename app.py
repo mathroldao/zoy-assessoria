@@ -1,4 +1,7 @@
-import streamlit as st
+from pathlib import Path
+
+code = r'''import streamlit as st
+import textwrap
 
 # =========================================================
 # ZOY ASSESSORIA — MVP
@@ -10,11 +13,14 @@ st.set_page_config(
     layout="wide"
 )
 
+def html(content: str):
+    st.markdown(textwrap.dedent(content).strip(), unsafe_allow_html=True)
+
 # =========================================================
 # CSS GLOBAL
 # =========================================================
 
-st.markdown("""
+html("""
 <style>
     .stApp {
         background-color: #FFFFFF;
@@ -34,10 +40,6 @@ st.markdown("""
         color: white !important;
     }
 
-    div[data-testid="stSidebarNav"] {
-        display: none;
-    }
-
     .zoy-logo {
         font-size: 42px;
         font-weight: 900;
@@ -53,14 +55,16 @@ st.markdown("""
         margin-bottom: 35px;
     }
 
-    .main-title {
+    .main-title,
+    .page-title {
         font-size: 34px;
         font-weight: 850;
         color: #17002E;
         margin-bottom: 4px;
     }
 
-    .subtitle {
+    .subtitle,
+    .page-subtitle {
         color: #6F6680;
         font-size: 15px;
         margin-bottom: 24px;
@@ -73,18 +77,6 @@ st.markdown("""
         margin-bottom: 26px;
     }
 
-    .page-title {
-        font-size: 34px;
-        font-weight: 850;
-        color: #17002E;
-        margin-bottom: 6px;
-    }
-
-    .page-subtitle {
-        color: #6F6680;
-        font-size: 15px;
-    }
-
     .primary-btn {
         background: linear-gradient(135deg, #6F2DE2, #4B12B8);
         color: white;
@@ -95,17 +87,10 @@ st.markdown("""
         border: none;
     }
 
-    .panel {
-        background: #FFFFFF;
-        border: 1px solid #E9DFFF;
-        border-radius: 22px;
-        padding: 22px;
-        box-shadow: none;
-    }
-
+    .panel,
     .panel-soft {
         background: #FFFFFF;
-        border: 1px solid #EFEAF8;
+        border: 1px solid #E9DFFF;
         border-radius: 22px;
         padding: 22px;
         box-shadow: none;
@@ -258,15 +243,6 @@ st.markdown("""
         font-weight: 900;
     }
 
-    .status-ended {
-        background: #EEF0F5;
-        color: #596074;
-        padding: 7px 13px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 900;
-    }
-
     .info-box {
         background: #FFFFFF;
         border: 1px solid #E9DFFF;
@@ -371,16 +347,6 @@ st.markdown("""
         display: inline-block;
     }
 
-    .badge-green {
-        background: #E8F8ED;
-        color: #148A42;
-        padding: 7px 11px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 900;
-        display: inline-block;
-    }
-
     .simple-card {
         background: white;
         border: 1px solid #E9DFFF;
@@ -389,29 +355,21 @@ st.markdown("""
         margin-bottom: 14px;
     }
 
-    /* Esconde label visual do radio, mas mantém funcional */
     div[data-testid="stRadio"] > label {
         display: none;
     }
 
-    div[data-testid="stRadio"] div[role="radiogroup"] {
-        gap: 0px;
-    }
-
-    /* Botões nativos */
     .stButton > button {
         border-radius: 12px;
         border: 1px solid #E9DFFF;
         font-weight: 700;
     }
 
-    /* Inputs */
     div[data-testid="stTextInput"] input {
         border-radius: 12px;
         border: 1px solid #E9DFFF;
     }
 
-    /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 18px;
         border-bottom: 1px solid #EFEAF8;
@@ -426,16 +384,16 @@ st.markdown("""
         color: #6F2DE2 !important;
     }
 </style>
-""", unsafe_allow_html=True)
+""")
 
 # =========================================================
 # SIDEBAR
 # =========================================================
 
-st.sidebar.markdown("""
+html("""
 <div class="zoy-logo">zoy</div>
 <div class="zoy-subtitle">ASSESSORIA</div>
-""", unsafe_allow_html=True)
+""")
 
 menu = st.sidebar.radio(
     "Menu",
@@ -508,73 +466,73 @@ creators_data = {
 # =========================================================
 
 if menu == "Dashboard":
-    st.markdown('<div class="main-title">Olá, Jean.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">Aqui está o panorama da assessoria hoje.</div>', unsafe_allow_html=True)
+    html('<div class="main-title">Olá, Jean.</div>')
+    html('<div class="subtitle">Aqui está o panorama da assessoria hoje.</div>')
 
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        st.markdown("""
+        html("""
         <div class="dashboard-card">
             <div class="dashboard-card-title">Creators ativos</div>
             <div class="dashboard-card-number">12</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with c2:
-        st.markdown("""
+        html("""
         <div class="dashboard-card">
             <div class="dashboard-card-title">Parcerias em andamento</div>
             <div class="dashboard-card-number">9</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with c3:
-        st.markdown("""
+        html("""
         <div class="dashboard-card">
             <div class="dashboard-card-title">Conteúdos pendentes</div>
             <div class="dashboard-card-number">17</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with c4:
-        st.markdown("""
+        html("""
         <div class="dashboard-card">
             <div class="dashboard-card-title">Reuniões da semana</div>
             <div class="dashboard-card-number">6</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     st.markdown("### Parcerias em andamento")
 
     p1, p2, p3 = st.columns(3)
 
     with p1:
-        st.markdown("""
+        html("""
         <div class="simple-card">
             <h4>FINI</h4>
             <p class="muted">Campanha de Reels + Stories</p>
             <span class="badge-blue">Negociação</span>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with p2:
-        st.markdown("""
+        html("""
         <div class="simple-card">
             <h4>Adidas</h4>
             <p class="muted">Campanha Always On</p>
             <span class="badge-purple">Produção</span>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with p3:
-        st.markdown("""
+        html("""
         <div class="simple-card">
             <h4>Lipton</h4>
             <p class="muted">Stories + Reel</p>
             <span class="badge-orange">Aprovação</span>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
 # =========================================================
 # INFLUENCIADORES
@@ -582,7 +540,7 @@ if menu == "Dashboard":
 
 elif menu == "Influenciadores":
 
-    st.markdown("""
+    html("""
     <div class="page-header">
         <div>
             <div class="page-title">Influenciadores</div>
@@ -590,13 +548,13 @@ elif menu == "Influenciadores":
         </div>
         <div class="primary-btn">+ Novo influenciador</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     left, right = st.columns([1.05, 3.55], gap="large")
 
     with left:
-        st.markdown('<div class="panel-soft">', unsafe_allow_html=True)
-        st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
+        html('<div class="panel-soft">')
+        html('<div class="section-title">Influenciadores</div>')
 
         st.text_input(
             "Buscar influenciador",
@@ -612,15 +570,9 @@ elif menu == "Influenciadores":
 
         for name, data in creators_data.items():
             card_class = "creator-list-card" if name == selected_creator else "creator-list-card-light"
+            status_class = "status-active" if data["status"] == "Ativo" else "status-paused"
 
-            if data["status"] == "Ativo":
-                status_class = "status-active"
-            elif data["status"] == "Pausado":
-                status_class = "status-paused"
-            else:
-                status_class = "status-ended"
-
-            st.markdown(f"""
+            html(f"""
             <div class="{card_class}">
                 <span class="avatar-small">{data["initials"]}</span>
                 <div style="display:inline-block; vertical-align:middle;">
@@ -631,20 +583,17 @@ elif menu == "Influenciadores":
                     <span class="{status_class}">{data["status"]}</span>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
-        st.markdown(
-            f'<div class="muted" style="margin-top:22px;">{len(creators_data)} influenciadores cadastrados</div>',
-            unsafe_allow_html=True
-        )
-        st.markdown('</div>', unsafe_allow_html=True)
+        html(f'<div class="muted" style="margin-top:22px;">{len(creators_data)} influenciadores cadastrados</div>')
+        html('</div>')
 
     creator = creators_data[selected_creator]
 
     with right:
         status_class = "status-active" if creator["status"] == "Ativo" else "status-paused"
 
-        st.markdown(f"""
+        html(f"""
         <div class="panel">
             <div class="profile-header">
                 <div class="avatar">{creator["initials"]}</div>
@@ -667,7 +616,7 @@ elif menu == "Influenciadores":
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
         tabs = st.tabs([
             "Visão geral",
@@ -682,7 +631,7 @@ elif menu == "Influenciadores":
             col_a, col_b = st.columns([1.1, 1.9], gap="large")
 
             with col_a:
-                st.markdown(f"""
+                html(f"""
                 <div class="panel">
                     <div class="section-title">Sobre o influenciador</div>
 
@@ -740,16 +689,17 @@ elif menu == "Influenciadores":
                         <span class="pill">Humor</span>
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
             with col_b:
-                st.markdown('<div class="panel">', unsafe_allow_html=True)
-                st.markdown("""
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div class="section-title">Métricas principais</div>
-                    <div style="color:#6F2DE2; font-weight:800; font-size:14px;">Ver todas as métricas</div>
+                html("""
+                <div class="panel">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="section-title">Métricas principais</div>
+                        <div style="color:#6F2DE2; font-weight:800; font-size:14px;">Ver todas as métricas</div>
+                    </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
                 m1, m2, m3, m4 = st.columns(4)
 
@@ -762,20 +712,18 @@ elif menu == "Influenciadores":
 
                 for col, (label, value, growth) in zip([m1, m2, m3, m4], metrics):
                     with col:
-                        st.markdown(f"""
+                        html(f"""
                         <div class="metric-card">
                             <div class="metric-label">{label}</div>
                             <div class="metric-value">{value}</div>
                             <div class="metric-growth">{growth}</div>
                             <div class="muted" style="font-size:12px;">vs mês anterior</div>
                         </div>
-                        """, unsafe_allow_html=True)
-
-                st.markdown('</div>', unsafe_allow_html=True)
+                        """)
 
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                st.markdown("""
+                html("""
                 <div class="panel">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                         <div class="section-title" style="margin-bottom:0;">Campanhas ativas</div>
@@ -817,55 +765,55 @@ elif menu == "Influenciadores":
                         </tbody>
                     </table>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
         with tabs[1]:
-            st.markdown("""
+            html("""
             <div class="panel">
                 <div class="section-title">Métricas completas</div>
                 <p class="muted">Aqui vamos registrar seguidores, alcance, impressões, views, engajamento e atualização manual das métricas.</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
         with tabs[2]:
-            st.markdown("""
+            html("""
             <div class="panel">
                 <div class="section-title">Campanhas ativas</div>
                 <p class="muted">Aqui fica a visão completa de campanhas vinculadas ao influenciador.</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
         with tabs[3]:
-            st.markdown("""
+            html("""
             <div class="panel">
                 <div class="section-title">Acompanhamento de postagem</div>
                 <p class="muted">Aqui vamos controlar entrega, data prevista, link, print, métricas e status.</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
         with tabs[4]:
-            st.markdown("""
+            html("""
             <div class="panel">
                 <div class="section-title">Histórico</div>
                 <p class="muted">Timeline de reuniões, ajustes, retornos comerciais e observações internas.</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
         with tabs[5]:
-            st.markdown("""
+            html("""
             <div class="panel">
                 <div class="section-title">Documentos</div>
                 <p class="muted">Contratos, mídia kit, dados bancários, NFs e arquivos importantes.</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
 # =========================================================
 # PLANEJAMENTO
 # =========================================================
 
 elif menu == "Planejamento":
-    st.markdown('<div class="page-title">Planejamento</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-subtitle">Organize metas, conteúdos e entregas mensais.</div>', unsafe_allow_html=True)
+    html('<div class="page-title">Planejamento</div>')
+    html('<div class="page-subtitle">Organize metas, conteúdos e entregas mensais.</div>')
     st.markdown("<br>", unsafe_allow_html=True)
 
     st.selectbox("Influenciador", list(creators_data.keys()))
@@ -883,44 +831,49 @@ elif menu == "Planejamento":
 # =========================================================
 
 elif menu == "Projetos":
-    st.markdown('<div class="page-title">Projetos</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-subtitle">Acompanhe parcerias, campanhas e entregas comerciais.</div>', unsafe_allow_html=True)
+    html('<div class="page-title">Projetos</div>')
+    html('<div class="page-subtitle">Acompanhe parcerias, campanhas e entregas comerciais.</div>')
     st.markdown("<br>", unsafe_allow_html=True)
 
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        st.markdown("""
+        html("""
         <div class="panel">
             <div class="section-title">Briefing recebido</div>
             <p>Sephora</p>
             <p>C&A</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with c2:
-        st.markdown("""
+        html("""
         <div class="panel">
             <div class="section-title">Negociação</div>
             <p>FINI</p>
             <p>Amaro</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with c3:
-        st.markdown("""
+        html("""
         <div class="panel">
             <div class="section-title">Produção</div>
             <p>Adidas</p>
             <p>Lipton</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with c4:
-        st.markdown("""
+        html("""
         <div class="panel">
             <div class="section-title">Finalizado</div>
             <p>Azul</p>
             <p>Natura</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
+'''
+
+path = Path("/mnt/data/app_corrigido.py")
+path.write_text(code, encoding="utf-8")
+path.as_posix()
