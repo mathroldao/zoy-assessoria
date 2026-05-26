@@ -143,30 +143,177 @@ if menu == "Dashboard":
         """, unsafe_allow_html=True)
 
 # Influenciadores
+# Influenciadores
 elif menu == "Influenciadores":
-    st.title("Influenciadores")
-
-    creators = [
-        "Jady Carvalho",
-        "Malu Borges",
-        "Vitória Guedes"
-    ]
-
-    creator = st.selectbox("Selecione o creator", creators)
-
-    st.markdown(f"## {creator}")
-
-    m1, m2, m3, m4 = st.columns(4)
-
-    m1.metric("Seguidores", "132K", "+2.3%")
-    m2.metric("Alcance", "48K", "+8.1%")
-    m3.metric("Stories", "18K", "+5.2%")
-    m4.metric("Engajamento", "4.2%", "+0.6%")
 
     st.markdown("""
-    ### Posicionamento
-    Lifestyle + Beauty + rotina espontânea + humor leve
-    """)
+    <style>
+    .creator-card {
+        background: white;
+        border: 1px solid #ECE7F7;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 8px 24px rgba(111,45,226,0.06);
+    }
+
+    .creator-item {
+        background: white;
+        border: 1px solid #ECE7F7;
+        border-radius: 16px;
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+
+    .metric-box {
+        background: white;
+        border: 1px solid #ECE7F7;
+        border-radius: 18px;
+        padding: 18px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 30px;
+        font-weight: 800;
+        color: #17002E;
+    }
+
+    .metric-label {
+        color: #7B6B8F;
+        font-size: 13px;
+    }
+
+    .status-active {
+        background: #E8F8ED;
+        color: #1D8A46;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.title("Influenciadores")
+    st.caption("Gerencie seus influenciadores e acompanhe tudo em um só lugar.")
+
+    left, right = st.columns([1, 3])
+
+    with left:
+        st.markdown("### Influenciadores")
+
+        st.text_input("Buscar influenciador")
+
+        creators = [
+            "Jady Carvalho",
+            "Malu Borges",
+            "Vitória Guedes",
+            "Laura Brito",
+            "Giovana Fagundes"
+        ]
+
+        creator = st.radio(
+            "Selecione",
+            creators,
+            label_visibility="collapsed"
+        )
+
+        st.button("+ Novo influenciador", use_container_width=True)
+
+    with right:
+        st.markdown(f"""
+        <div class="creator-card">
+            <h2>{creator}</h2>
+            <p>@creatorhandle · Lifestyle · São Paulo</p>
+            <br>
+            <span class="status-active">ATIVO</span>
+            <br><br>
+            <b>Responsável:</b> Jean
+        </div>
+        """, unsafe_allow_html=True)
+
+        tabs = st.tabs([
+            "Visão geral",
+            "Métricas",
+            "Campanhas ativas",
+            "Acompanhamento",
+            "Histórico"
+        ])
+
+        with tabs[0]:
+            c1, c2 = st.columns([1, 2])
+
+            with c1:
+                st.markdown("""
+                <div class="creator-card">
+                    <h4>Sobre o influenciador</h4>
+                    <p><b>E-mail:</b> creator@email.com</p>
+                    <p><b>Telefone:</b> (11) 99999-9999</p>
+                    <p><b>Nicho:</b> Lifestyle / Beauty</p>
+                    <p><b>Aniversário:</b> 12/03</p>
+                    <p><b>Posicionamento:</b> Lifestyle real, rotina espontânea e humor.</p>
+                    <p><b>Observações:</b> Forte entrega em reels.</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c2:
+                m1, m2, m3, m4 = st.columns(4)
+
+                with m1:
+                    st.markdown("""
+                    <div class="metric-box">
+                        <div class="metric-label">Seguidores</div>
+                        <div class="metric-value">132K</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with m2:
+                    st.markdown("""
+                    <div class="metric-box">
+                        <div class="metric-label">Alcance médio</div>
+                        <div class="metric-value">48K</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with m3:
+                    st.markdown("""
+                    <div class="metric-box">
+                        <div class="metric-label">Views Stories</div>
+                        <div class="metric-value">18K</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with m4:
+                    st.markdown("""
+                    <div class="metric-box">
+                        <div class="metric-label">Engajamento</div>
+                        <div class="metric-value">4.2%</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.markdown("### Campanhas ativas")
+
+                campanhas = {
+                    "Marca": ["Adidas", "Lipton", "FINI"],
+                    "Campanha": ["Always On", "Verão 2025", "Doces Momentos"],
+                    "Entrega": ["3 Reels + 6 Stories", "2 Stories + 1 Reel", "2 Reels + 4 Stories"],
+                    "Prazo": ["25/05", "30/05", "15/06"],
+                    "Status": ["Produção", "Aprovação", "Negociação"]
+                }
+
+                st.dataframe(campanhas, use_container_width=True)
+
+        with tabs[1]:
+            st.write("Métricas completas do influenciador.")
+
+        with tabs[2]:
+            st.write("Todas as campanhas ativas.")
+
+        with tabs[3]:
+            st.write("Acompanhamento de postagem.")
+
+        with tabs[4]:
+            st.write("Histórico de interações.")
 
 # Planejamento
 elif menu == "Planejamento":
