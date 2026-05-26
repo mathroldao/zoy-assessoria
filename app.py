@@ -1,11 +1,5 @@
-from pathlib import Path
-
-code = r'''import streamlit as st
+import streamlit as st
 import textwrap
-
-# =========================================================
-# ZOY ASSESSORIA — MVP
-# =========================================================
 
 st.set_page_config(
     page_title="Zoy Assessoria",
@@ -16,15 +10,9 @@ st.set_page_config(
 def html(content: str):
     st.markdown(textwrap.dedent(content).strip(), unsafe_allow_html=True)
 
-# =========================================================
-# CSS GLOBAL
-# =========================================================
-
 html("""
 <style>
-    .stApp {
-        background-color: #FFFFFF;
-    }
+    .stApp { background-color: #FFFFFF; }
 
     .block-container {
         padding-top: 2rem;
@@ -43,7 +31,6 @@ html("""
     .zoy-logo {
         font-size: 42px;
         font-weight: 900;
-        letter-spacing: -1px;
         color: white;
         margin-bottom: -6px;
     }
@@ -55,16 +42,14 @@ html("""
         margin-bottom: 35px;
     }
 
-    .main-title,
-    .page-title {
+    .main-title, .page-title {
         font-size: 34px;
         font-weight: 850;
         color: #17002E;
         margin-bottom: 4px;
     }
 
-    .subtitle,
-    .page-subtitle {
+    .subtitle, .page-subtitle {
         color: #6F6680;
         font-size: 15px;
         margin-bottom: 24px;
@@ -84,55 +69,22 @@ html("""
         border-radius: 12px;
         font-weight: 800;
         text-align: center;
-        border: none;
     }
 
-    .panel,
-    .panel-soft {
+    .panel, .panel-soft, .simple-card, .dashboard-card, .metric-card {
         background: #FFFFFF;
         border: 1px solid #E9DFFF;
+        box-shadow: none;
+    }
+
+    .panel, .panel-soft {
         border-radius: 22px;
         padding: 22px;
-        box-shadow: none;
-    }
-
-    .metric-card {
-        background: #FFFFFF;
-        border: 1px solid #E9DFFF;
-        border-radius: 18px;
-        padding: 20px 16px;
-        text-align: center;
-        box-shadow: none;
-        min-height: 126px;
-    }
-
-    .metric-label {
-        color: #7B6B8F;
-        font-size: 13px;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
-
-    .metric-value {
-        color: #17002E;
-        font-size: 30px;
-        font-weight: 900;
-        margin-bottom: 4px;
-    }
-
-    .metric-growth {
-        color: #12994F;
-        font-size: 13px;
-        font-weight: 800;
-        margin-top: 4px;
     }
 
     .dashboard-card {
-        background: #FFFFFF;
-        border: 1px solid #E9DFFF;
         border-radius: 20px;
         padding: 22px;
-        box-shadow: none;
         min-height: 128px;
     }
 
@@ -146,6 +98,12 @@ html("""
         color: #17002E;
         font-size: 34px;
         font-weight: 900;
+    }
+
+    .simple-card {
+        border-radius: 18px;
+        padding: 18px;
+        margin-bottom: 14px;
     }
 
     .section-title {
@@ -273,9 +231,7 @@ html("""
         align-items: start;
     }
 
-    .info-row:last-child {
-        border-bottom: none;
-    }
+    .info-row:last-child { border-bottom: none; }
 
     .info-icon {
         color: #6F2DE2;
@@ -296,6 +252,34 @@ html("""
         line-height: 1.45;
     }
 
+    .metric-card {
+        border-radius: 18px;
+        padding: 20px 16px;
+        text-align: center;
+        min-height: 126px;
+    }
+
+    .metric-label {
+        color: #7B6B8F;
+        font-size: 13px;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .metric-value {
+        color: #17002E;
+        font-size: 30px;
+        font-weight: 900;
+        margin-bottom: 4px;
+    }
+
+    .metric-growth {
+        color: #12994F;
+        font-size: 13px;
+        font-weight: 800;
+        margin-top: 4px;
+    }
+
     .campaign-table {
         width: 100%;
         border-collapse: collapse;
@@ -314,12 +298,9 @@ html("""
         color: #30273F;
         padding: 15px 8px;
         border-bottom: 1px solid #EFEAF8;
-        vertical-align: middle;
     }
 
-    .badge-purple {
-        background: #EFE4FF;
-        color: #6F2DE2;
+    .badge-purple, .badge-orange, .badge-blue {
         padding: 7px 11px;
         border-radius: 999px;
         font-size: 12px;
@@ -327,37 +308,11 @@ html("""
         display: inline-block;
     }
 
-    .badge-orange {
-        background: #FFF1DD;
-        color: #C76A00;
-        padding: 7px 11px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 900;
-        display: inline-block;
-    }
+    .badge-purple { background: #EFE4FF; color: #6F2DE2; }
+    .badge-orange { background: #FFF1DD; color: #C76A00; }
+    .badge-blue { background: #EAF0FF; color: #1746B3; }
 
-    .badge-blue {
-        background: #EAF0FF;
-        color: #1746B3;
-        padding: 7px 11px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 900;
-        display: inline-block;
-    }
-
-    .simple-card {
-        background: white;
-        border: 1px solid #E9DFFF;
-        border-radius: 18px;
-        padding: 18px;
-        margin-bottom: 14px;
-    }
-
-    div[data-testid="stRadio"] > label {
-        display: none;
-    }
+    div[data-testid="stRadio"] > label { display: none; }
 
     .stButton > button {
         border-radius: 12px;
@@ -386,10 +341,6 @@ html("""
 </style>
 """)
 
-# =========================================================
-# SIDEBAR
-# =========================================================
-
 html("""
 <div class="zoy-logo">zoy</div>
 <div class="zoy-subtitle">ASSESSORIA</div>
@@ -405,10 +356,6 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("**Jean**")
 st.sidebar.caption("Responsável")
 st.sidebar.markdown("Sair")
-
-# =========================================================
-# BASE MOCKADA
-# =========================================================
 
 creators_data = {
     "Jady Carvalho": {
@@ -461,85 +408,39 @@ creators_data = {
     }
 }
 
-# =========================================================
-# DASHBOARD
-# =========================================================
-
 if menu == "Dashboard":
     html('<div class="main-title">Olá, Jean.</div>')
     html('<div class="subtitle">Aqui está o panorama da assessoria hoje.</div>')
 
     c1, c2, c3, c4 = st.columns(4)
 
-    with c1:
-        html("""
-        <div class="dashboard-card">
-            <div class="dashboard-card-title">Creators ativos</div>
-            <div class="dashboard-card-number">12</div>
-        </div>
-        """)
+    cards = [
+        ("Creators ativos", "12"),
+        ("Parcerias em andamento", "9"),
+        ("Conteúdos pendentes", "17"),
+        ("Reuniões da semana", "6")
+    ]
 
-    with c2:
-        html("""
-        <div class="dashboard-card">
-            <div class="dashboard-card-title">Parcerias em andamento</div>
-            <div class="dashboard-card-number">9</div>
-        </div>
-        """)
-
-    with c3:
-        html("""
-        <div class="dashboard-card">
-            <div class="dashboard-card-title">Conteúdos pendentes</div>
-            <div class="dashboard-card-number">17</div>
-        </div>
-        """)
-
-    with c4:
-        html("""
-        <div class="dashboard-card">
-            <div class="dashboard-card-title">Reuniões da semana</div>
-            <div class="dashboard-card-number">6</div>
-        </div>
-        """)
+    for col, (title, number) in zip([c1, c2, c3, c4], cards):
+        with col:
+            html(f"""
+            <div class="dashboard-card">
+                <div class="dashboard-card-title">{title}</div>
+                <div class="dashboard-card-number">{number}</div>
+            </div>
+            """)
 
     st.markdown("### Parcerias em andamento")
-
     p1, p2, p3 = st.columns(3)
 
     with p1:
-        html("""
-        <div class="simple-card">
-            <h4>FINI</h4>
-            <p class="muted">Campanha de Reels + Stories</p>
-            <span class="badge-blue">Negociação</span>
-        </div>
-        """)
-
+        html('<div class="simple-card"><h4>FINI</h4><p class="muted">Campanha de Reels + Stories</p><span class="badge-blue">Negociação</span></div>')
     with p2:
-        html("""
-        <div class="simple-card">
-            <h4>Adidas</h4>
-            <p class="muted">Campanha Always On</p>
-            <span class="badge-purple">Produção</span>
-        </div>
-        """)
-
+        html('<div class="simple-card"><h4>Adidas</h4><p class="muted">Campanha Always On</p><span class="badge-purple">Produção</span></div>')
     with p3:
-        html("""
-        <div class="simple-card">
-            <h4>Lipton</h4>
-            <p class="muted">Stories + Reel</p>
-            <span class="badge-orange">Aprovação</span>
-        </div>
-        """)
-
-# =========================================================
-# INFLUENCIADORES
-# =========================================================
+        html('<div class="simple-card"><h4>Lipton</h4><p class="muted">Stories + Reel</p><span class="badge-orange">Aprovação</span></div>')
 
 elif menu == "Influenciadores":
-
     html("""
     <div class="page-header">
         <div>
@@ -555,18 +456,9 @@ elif menu == "Influenciadores":
     with left:
         html('<div class="panel-soft">')
         html('<div class="section-title">Influenciadores</div>')
+        st.text_input("Buscar influenciador", placeholder="Buscar influenciador...", label_visibility="collapsed")
 
-        st.text_input(
-            "Buscar influenciador",
-            placeholder="Buscar influenciador...",
-            label_visibility="collapsed"
-        )
-
-        selected_creator = st.radio(
-            "Influenciadores",
-            list(creators_data.keys()),
-            label_visibility="collapsed"
-        )
+        selected_creator = st.radio("Influenciadores", list(creators_data.keys()), label_visibility="collapsed")
 
         for name, data in creators_data.items():
             card_class = "creator-list-card" if name == selected_creator else "creator-list-card-light"
@@ -597,19 +489,16 @@ elif menu == "Influenciadores":
         <div class="panel">
             <div class="profile-header">
                 <div class="avatar">{creator["initials"]}</div>
-
                 <div style="flex:1;">
                     <div class="profile-name">{selected_creator}</div>
                     <div class="profile-handle">{creator["handle"]}</div>
                     <div class="muted">{creator["nicho"]}</div>
                     <div class="muted" style="margin-top:10px;">📍 {creator["cidade"]}</div>
                 </div>
-
                 <div class="info-box">
                     <div class="muted">Responsável</div>
                     <div style="margin-top:7px;"><b>Jean</b></div>
                 </div>
-
                 <div class="info-box">
                     <div class="muted">Status</div>
                     <div style="margin-top:9px;"><span class="{status_class}">{creator["status"]}</span></div>
@@ -618,14 +507,7 @@ elif menu == "Influenciadores":
         </div>
         """)
 
-        tabs = st.tabs([
-            "Visão geral",
-            "Métricas",
-            "Campanhas ativas",
-            "Acompanhamento",
-            "Histórico",
-            "Documentos"
-        ])
+        tabs = st.tabs(["Visão geral", "Métricas", "Campanhas ativas", "Acompanhamento", "Histórico", "Documentos"])
 
         with tabs[0]:
             col_a, col_b = st.columns([1.1, 1.9], gap="large")
@@ -635,53 +517,12 @@ elif menu == "Influenciadores":
                 <div class="panel">
                     <div class="section-title">Sobre o influenciador</div>
 
-                    <div class="info-row">
-                        <div class="info-icon">✉</div>
-                        <div>
-                            <div class="info-label">E-mail</div>
-                            <div class="info-value">{creator["email"]}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">☎</div>
-                        <div>
-                            <div class="info-label">Telefone</div>
-                            <div class="info-value">{creator["telefone"]}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">◇</div>
-                        <div>
-                            <div class="info-label">Nicho</div>
-                            <div class="info-value">{creator["nicho"]}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">▣</div>
-                        <div>
-                            <div class="info-label">Aniversário</div>
-                            <div class="info-value">{creator["aniversario"]}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">☆</div>
-                        <div>
-                            <div class="info-label">Posicionamento</div>
-                            <div class="info-value">{creator["posicionamento"]}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">□</div>
-                        <div>
-                            <div class="info-label">Observações</div>
-                            <div class="info-value">{creator["obs"]}</div>
-                        </div>
-                    </div>
+                    <div class="info-row"><div class="info-icon">✉</div><div><div class="info-label">E-mail</div><div class="info-value">{creator["email"]}</div></div></div>
+                    <div class="info-row"><div class="info-icon">☎</div><div><div class="info-label">Telefone</div><div class="info-value">{creator["telefone"]}</div></div></div>
+                    <div class="info-row"><div class="info-icon">◇</div><div><div class="info-label">Nicho</div><div class="info-value">{creator["nicho"]}</div></div></div>
+                    <div class="info-row"><div class="info-icon">▣</div><div><div class="info-label">Aniversário</div><div class="info-value">{creator["aniversario"]}</div></div></div>
+                    <div class="info-row"><div class="info-icon">☆</div><div><div class="info-label">Posicionamento</div><div class="info-value">{creator["posicionamento"]}</div></div></div>
+                    <div class="info-row"><div class="info-icon">□</div><div><div class="info-label">Observações</div><div class="info-value">{creator["obs"]}</div></div></div>
 
                     <div style="margin-top:18px;">
                         <span class="pill">Lifestyle</span>
@@ -741,75 +582,28 @@ elif menu == "Influenciadores":
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><b>Adidas</b></td>
-                                <td>Always On</td>
-                                <td>3 Reels + 6 Stories</td>
-                                <td>25/05</td>
-                                <td><span class="badge-purple">Produção</span></td>
-                            </tr>
-                            <tr>
-                                <td><b>Lipton</b></td>
-                                <td>Verão 2025</td>
-                                <td>2 Stories + 1 Reel</td>
-                                <td>30/05</td>
-                                <td><span class="badge-orange">Aprovação</span></td>
-                            </tr>
-                            <tr>
-                                <td><b>FINI</b></td>
-                                <td>Doces Momentos</td>
-                                <td>2 Reels + 4 Stories</td>
-                                <td>15/06</td>
-                                <td><span class="badge-blue">Negociação</span></td>
-                            </tr>
+                            <tr><td><b>Adidas</b></td><td>Always On</td><td>3 Reels + 6 Stories</td><td>25/05</td><td><span class="badge-purple">Produção</span></td></tr>
+                            <tr><td><b>Lipton</b></td><td>Verão 2025</td><td>2 Stories + 1 Reel</td><td>30/05</td><td><span class="badge-orange">Aprovação</span></td></tr>
+                            <tr><td><b>FINI</b></td><td>Doces Momentos</td><td>2 Reels + 4 Stories</td><td>15/06</td><td><span class="badge-blue">Negociação</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 """)
 
         with tabs[1]:
-            html("""
-            <div class="panel">
-                <div class="section-title">Métricas completas</div>
-                <p class="muted">Aqui vamos registrar seguidores, alcance, impressões, views, engajamento e atualização manual das métricas.</p>
-            </div>
-            """)
+            html('<div class="panel"><div class="section-title">Métricas completas</div><p class="muted">Aqui vamos registrar seguidores, alcance, impressões, views, engajamento e atualização manual das métricas.</p></div>')
 
         with tabs[2]:
-            html("""
-            <div class="panel">
-                <div class="section-title">Campanhas ativas</div>
-                <p class="muted">Aqui fica a visão completa de campanhas vinculadas ao influenciador.</p>
-            </div>
-            """)
+            html('<div class="panel"><div class="section-title">Campanhas ativas</div><p class="muted">Aqui fica a visão completa de campanhas vinculadas ao influenciador.</p></div>')
 
         with tabs[3]:
-            html("""
-            <div class="panel">
-                <div class="section-title">Acompanhamento de postagem</div>
-                <p class="muted">Aqui vamos controlar entrega, data prevista, link, print, métricas e status.</p>
-            </div>
-            """)
+            html('<div class="panel"><div class="section-title">Acompanhamento de postagem</div><p class="muted">Aqui vamos controlar entrega, data prevista, link, print, métricas e status.</p></div>')
 
         with tabs[4]:
-            html("""
-            <div class="panel">
-                <div class="section-title">Histórico</div>
-                <p class="muted">Timeline de reuniões, ajustes, retornos comerciais e observações internas.</p>
-            </div>
-            """)
+            html('<div class="panel"><div class="section-title">Histórico</div><p class="muted">Timeline de reuniões, ajustes, retornos comerciais e observações internas.</p></div>')
 
         with tabs[5]:
-            html("""
-            <div class="panel">
-                <div class="section-title">Documentos</div>
-                <p class="muted">Contratos, mídia kit, dados bancários, NFs e arquivos importantes.</p>
-            </div>
-            """)
-
-# =========================================================
-# PLANEJAMENTO
-# =========================================================
+            html('<div class="panel"><div class="section-title">Documentos</div><p class="muted">Contratos, mídia kit, dados bancários, NFs e arquivos importantes.</p></div>')
 
 elif menu == "Planejamento":
     html('<div class="page-title">Planejamento</div>')
@@ -826,10 +620,6 @@ elif menu == "Planejamento":
     c3.number_input("Collabs", value=1)
     c4.number_input("Publis", value=1)
 
-# =========================================================
-# PROJETOS
-# =========================================================
-
 elif menu == "Projetos":
     html('<div class="page-title">Projetos</div>')
     html('<div class="page-subtitle">Acompanhe parcerias, campanhas e entregas comerciais.</div>')
@@ -838,42 +628,10 @@ elif menu == "Projetos":
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        html("""
-        <div class="panel">
-            <div class="section-title">Briefing recebido</div>
-            <p>Sephora</p>
-            <p>C&A</p>
-        </div>
-        """)
-
+        html('<div class="panel"><div class="section-title">Briefing recebido</div><p>Sephora</p><p>C&A</p></div>')
     with c2:
-        html("""
-        <div class="panel">
-            <div class="section-title">Negociação</div>
-            <p>FINI</p>
-            <p>Amaro</p>
-        </div>
-        """)
-
+        html('<div class="panel"><div class="section-title">Negociação</div><p>FINI</p><p>Amaro</p></div>')
     with c3:
-        html("""
-        <div class="panel">
-            <div class="section-title">Produção</div>
-            <p>Adidas</p>
-            <p>Lipton</p>
-        </div>
-        """)
-
+        html('<div class="panel"><div class="section-title">Produção</div><p>Adidas</p><p>Lipton</p></div>')
     with c4:
-        html("""
-        <div class="panel">
-            <div class="section-title">Finalizado</div>
-            <p>Azul</p>
-            <p>Natura</p>
-        </div>
-        """)
-'''
-
-path = Path("/mnt/data/app_corrigido.py")
-path.write_text(code, encoding="utf-8")
-path.as_posix()
+        html('<div class="panel"><div class="section-title">Finalizado</div><p>Azul</p><p>Natura</p></div>')
