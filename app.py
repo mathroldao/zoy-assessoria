@@ -42,22 +42,6 @@ st.markdown("""
         font-size: 15px;
     }
 
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 28px;
-    }
-
-    .primary-btn {
-        background: #6F2DE2;
-        color: white;
-        padding: 13px 20px;
-        border-radius: 12px;
-        font-weight: 700;
-        text-align: center;
-    }
-
     .card, .panel, .metric-card, .creator-list-card, .creator-list-card-light, .info-box {
         background: white;
         border: 1px solid #E9DFFF;
@@ -452,15 +436,14 @@ if menu == "Dashboard":
 # =========================
 elif menu == "Influenciadores":
 
-    st.markdown("""
-    <div class="page-header">
-        <div>
-            <div class="page-title">Influenciadores</div>
-            <div class="page-subtitle">Gerencie seus influenciadores e acompanhe tudo em um só lugar.</div>
-        </div>
-        <div class="primary-btn">+ Novo influenciador</div>
-    </div>
-    """, unsafe_allow_html=True)
+    title_col, btn_col = st.columns([5, 1])
+
+with title_col:
+    st.markdown('<div class="page-title">Influenciadores</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">Gerencie seus influenciadores e acompanhe tudo em um só lugar.</div>', unsafe_allow_html=True)
+
+with btn_col:
+    st.button("+ Novo influenciador", use_container_width=True)
 
     left, right = st.columns([1.05, 3.4], gap="large")
 
@@ -468,11 +451,7 @@ elif menu == "Influenciadores":
         st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
         st.text_input("Buscar influenciador", placeholder="Buscar influenciador...", label_visibility="collapsed")
 
-        selected_creator = st.radio(
-            "Influenciadores",
-            list(creators_data.keys()),
-            label_visibility="collapsed"
-        )
+        selected_creator = "Jady Carvalho"
 
         for name, data in creators_data.items():
             card_class = "creator-list-card" if name == selected_creator else "creator-list-card-light"
