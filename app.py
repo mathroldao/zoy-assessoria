@@ -1,4 +1,3 @@
-from pathlib import Path
 
 code = '''import streamlit as st
 import textwrap
@@ -639,6 +638,3 @@ elif menu == "Projetos":
         html('<div class="panel"><div class="section-title">Finalizado</div><p>Azul</p><p>Natura</p></div>')
 '''
 
-path = Path("/mnt/data/app_limpo.py")
-path.write_text(code, encoding="utf-8")
-path.as_posix()
