@@ -1,4 +1,6 @@
-import streamlit as st
+from pathlib import Path
+
+code = """import streamlit as st
 import pandas as pd
 from copy import deepcopy
 
@@ -205,11 +207,7 @@ elif menu == "Planejamento":
     with col1:
         st.selectbox("Influenciador", get_creator_names()); st.selectbox("Objetivo do mês", ["Crescimento","Monetização","Posicionamento","Autoridade","Relacionamento com marcas","Awareness"]); st.multiselect("Pilares editoriais", ["Lifestyle","Beleza","Skincare","Humor","Moda","Viagem","Fitness","Gastronomia"], default=["Lifestyle"]); st.checkbox("Reunião realizada"); st.checkbox("Planejamento aprovado"); st.checkbox("Creator alinhado"); st.checkbox("Execução iniciada")
     with col2:
-        st.markdown("### Plano do mês"); st.text_area("Estratégia do mês", "Descrever a estratégia geral do creator para o mês."); st.text_area("Conteúdos orgânicos sugeridos", "Ideia 1
-Ideia 2
-Ideia 3"); st.text_area("Collabs sugeridas", "Creator X — objetivo
-Creator Y — objetivo"); st.text_area("Marcas alvo", "Marca 1 — motivo fit
-Marca 2 — abordagem"); st.text_area("Datas importantes", "Eventos, sazonalidades e datas relevantes.")
+        st.markdown("### Plano do mês"); st.text_area("Estratégia do mês", "Descrever a estratégia geral do creator para o mês."); st.text_area("Conteúdos orgânicos sugeridos", "Ideia 1\nIdeia 2\nIdeia 3"); st.text_area("Collabs sugeridas", "Creator X — objetivo\nCreator Y — objetivo"); st.text_area("Marcas alvo", "Marca 1 — motivo fit\nMarca 2 — abordagem"); st.text_area("Datas importantes", "Eventos, sazonalidades e datas relevantes.")
     st.markdown("### Planejamentos em andamento"); st.dataframe(st.session_state.planning, use_container_width=True, hide_index=True)
 
 elif menu == "Oportunidades":
@@ -236,3 +234,8 @@ elif menu == "Documentos":
     st.markdown('<div class="page-title">Documentos</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Central de arquivos dos influenciadores.</div>', unsafe_allow_html=True)
     st.selectbox("Influenciador", get_creator_names()); st.markdown("### Uploads"); st.file_uploader("Mídia kit", type=["pdf","pptx","docx"]); st.file_uploader("Contrato", type=["pdf","docx"]); st.file_uploader("Documentos pessoais", type=["pdf","jpg","png"]); st.file_uploader("Comprovante bancário", type=["pdf","jpg","png"]); st.file_uploader("Notas fiscais", type=["pdf","xml"]); st.info("Na próxima etapa conectamos esses arquivos ao Google Drive ou banco de dados.")
+"""
+
+path = Path("/mnt/data/app_zoy_assessoria_lista_final.py")
+path.write_text(code, encoding="utf-8")
+print(path.as_posix())
