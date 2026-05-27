@@ -124,6 +124,31 @@ def salvar_influenciador_sheets(dados):
     except Exception:
         return False
 
+def atualizar_influenciador_sheets(nome_original, dados):
+    try:
+        payload = {
+            "action": "update",
+            "nome_original": nome_original,
+            **dados
+        }
+
+        response = requests.post(API_URL, json=payload, timeout=15)
+        return response.status_code == 200
+    except Exception:
+        return False
+
+def excluir_influenciador_sheets(nome_original):
+    try:
+        payload = {
+            "action": "delete",
+            "nome_original": nome_original
+        }
+
+        response = requests.post(API_URL, json=payload, timeout=15)
+        return response.status_code == 200
+    except Exception:
+        return False
+
 def refresh_creators():
     st.session_state.creators = carregar_influenciadores()
     names = list(st.session_state.creators.keys())
@@ -343,10 +368,26 @@ elif menu == "Influenciadores":
                 st.rerun()
 
         if st.session_state.deleting_creator == selected:
-            st.error("Por enquanto, a exclusão permanente deve ser feita direto no Google Sheets.")
-            if st.button("Cancelar exclusão", use_container_width=True):
-                st.session_state.deleting_creator = None
-                st.rerun()
+            st.warning("Tem certeza que deseja excluir este influenciador?")
+
+            cdel1, cdel2 = st.columns(2)
+
+            with cdel1:
+                if st.button("Confirmar exclusão", use_container_width=True):
+                    ok = excluir_influenciador_sheets(selected)
+
+                    if ok:
+                        refresh_creators()
+                        st.session_state.deleting_creator = None
+                        st.success("Influenciador excluído.")
+                        st.rerun()
+                    else:
+                        st.error("Erro ao excluir influenciador.")
+
+            with cdel2:
+                if st.button("Cancelar exclusão", use_container_width=True):
+                    st.session_state.deleting_creator = None
+                    st.rerun()
 
         if st.session_state.editing_creator == selected:
             with st.expander("Editar dados do influenciador", expanded=True):
@@ -385,15 +426,36 @@ elif menu == "Influenciadores":
                     save = s1.form_submit_button("Salvar alterações")
                     cancel = s2.form_submit_button("Cancelar")
                     if save:
-                        updated = {**creator, "nome": enome, "nome_artistico": enomeart, "initials": initials_from_name(enome), "handle": ehandle, "email": eemail, "telefone": etel, "cidade": ecid, "nicho": enicho, "aniversario": eani, "cpf_cnpj": ecpf, "status": estatus, "pix": epix, "banco": ebanco, "agencia": eag, "conta": econta, "endereco": eend, "bio": ebio, "posicionamento": epos, "tom_voz": etom, "marcas_sonho": ems, "marcas_no_fit": enf, "obs": eobs}
-                        if enome != selected:
-                            del st.session_state.creators[selected]
-                            st.session_state.creators[enome] = updated
+                        payload = {
+                            "nome_completo": enome,
+                            "nome_artistico": enomeart,
+                            "instagram": ehandle,
+                            "email": eemail,
+                            "telefone": etel,
+                            "cidade": ecid,
+                            "nicho": enicho,
+                            "aniversario": eani,
+                            "cpf_cnpj": ecpf,
+                            "pix": epix,
+                            "banco": ebanco,
+                            "agencia": eag,
+                            "conta": econta,
+                            "bio": ebio,
+                            "posicionamento": epos,
+                            "status": estatus,
+                            "foto": creator.get("foto", "")
+                        }
+
+                        ok = atualizar_influenciador_sheets(selected, payload)
+
+                        if ok:
+                            refresh_creators()
                             st.session_state.selected_creator = enome
+                            st.session_state.editing_creator = None
+                            st.success("Influenciador atualizado.")
+                            st.rerun()
                         else:
-                            st.session_state.creators[selected] = updated
-                        st.session_state.editing_creator = None
-                        st.rerun()
+                            st.error("Erro ao atualizar influenciador.")
                     if cancel:
                         st.session_state.editing_creator = None
                         st.rerun()
