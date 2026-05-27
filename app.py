@@ -7,23 +7,271 @@ st.set_page_config(page_title="Zoy Assessoria", page_icon="💜", layout="wide")
 
 st.markdown("""
 <style>
-.stApp { background:#FFFFFF; }
-.block-container { padding-top:2rem; padding-bottom:2rem; max-width:100%; }
-section[data-testid="stSidebar"] { background:linear-gradient(180deg,#2B005D 0%,#6F2DE2 100%); }
-section[data-testid="stSidebar"] * { color:white !important; }
-.page-title { font-size:34px; font-weight:900; color:#17002E; margin-bottom:4px; }
-.page-subtitle { color:#6F6680; font-size:15px; margin-bottom:22px; }
-.zoy-title { font-size:42px; font-weight:900; color:white; margin-bottom:-8px; }
-.zoy-subtitle { font-size:12px; letter-spacing:4px; color:#DCCBFF; margin-bottom:30px; }
-.pill { display:inline-block; background:#EFE4FF; color:#6F2DE2; padding:7px 12px; border-radius:999px; font-size:12px; font-weight:800; margin-right:6px; margin-bottom:6px; }
-.avatar { width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#B98CFF,#6F2DE2); color:white; font-size:26px; font-weight:900; display:flex; align-items:center; justify-content:center; }
-.avatar-small { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#B98CFF,#6F2DE2); color:white; font-size:14px; font-weight:900; display:flex; align-items:center; justify-content:center; }
-.creator-card { border:1px solid #E9DFFF; border-radius:16px; padding:12px; margin-bottom:10px; }
-.creator-card-active { border:1px solid #DCCBFF; background:#F8F4FF; border-radius:16px; padding:12px; margin-bottom:10px; }
-.profile-box { border:1px solid #E9DFFF; border-radius:22px; padding:22px; margin-bottom:18px; }
-.stButton > button { border-radius:12px; font-weight:700; min-height:38px; }
+:root {
+    --zoy-purple: #4B12B8;
+    --zoy-dark: #17002E;
+    --zoy-soft: #F7F2FF;
+    --zoy-border: #E7D9FF;
+    --zoy-muted: #756B86;
+}
+
+.stApp {
+    background: #FFFFFF;
+}
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    max-width: 100%;
+}
+
+/* SIDEBAR */
+section[data-testid="stSidebar"] {
+    background: #FBFAFD;
+    border-right: 1px solid #EFE7FF;
+}
+
+section[data-testid="stSidebar"] * {
+    color: #17002E !important;
+}
+
+.zoy-logo {
+    font-size: 42px;
+    font-weight: 950;
+    letter-spacing: -2px;
+    color: #17002E;
+    margin-bottom: -8px;
+}
+
+.zoy-subtitle {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #6F2DE2;
+    margin-bottom: 26px;
+    font-weight: 800;
+}
+
+.menu-card {
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.menu-card-active {
+    background: #F0E7FF;
+    border: 1px solid #DCCBFF;
+    color: #4B12B8 !important;
+}
+
+.sidebar-user {
+    margin-top: 40px;
+    padding: 16px;
+    border-radius: 18px;
+    background: #FFFFFF;
+    border: 1px solid #E7D9FF;
+}
+
+.sidebar-user-name {
+    font-weight: 900;
+    color: #17002E;
+}
+
+.sidebar-user-role {
+    color: #756B86;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* TITLES */
+.page-title {
+    font-size: 36px;
+    font-weight: 950;
+    color: #17002E;
+    letter-spacing: -1px;
+    margin-bottom: 2px;
+}
+
+.page-subtitle {
+    color: #756B86;
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #17002E;
+    margin-bottom: 16px;
+}
+
+.muted {
+    color: #756B86;
+    font-size: 14px;
+}
+
+/* CARDS */
+.z-card {
+    background: #FFFFFF;
+    border: 1px solid #E7D9FF;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 14px 40px rgba(75, 18, 184, 0.04);
+    margin-bottom: 16px;
+}
+
+.profile-card {
+    background: #FFFFFF;
+    border: 1px solid #E7D9FF;
+    border-radius: 26px;
+    padding: 24px;
+    box-shadow: 0 14px 40px rgba(75, 18, 184, 0.04);
+    margin-bottom: 18px;
+}
+
+.info-card {
+    background: #FFFFFF;
+    border: 1px solid #E7D9FF;
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 210px;
+}
+
+.creator-card {
+    background: #FFFFFF;
+    border: 1px solid #EFE7FF;
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.creator-card-active {
+    background: #F7F2FF;
+    border: 1px solid #D7C4FF;
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+/* AVATARS */
+.avatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #B98CFF, #6F2DE2);
+    color: white;
+    font-size: 30px;
+    font-weight: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-small {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #B98CFF, #6F2DE2);
+    color: white;
+    font-size: 15px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+
+.profile-name {
+    font-size: 32px;
+    font-weight: 950;
+    color: #17002E;
+    letter-spacing: -0.8px;
+    margin-bottom: 4px;
+}
+
+.profile-handle {
+    color: #6F2DE2;
+    font-weight: 900;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.status-pill {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.status-active {
+    background: #E8F8ED;
+    color: #148A42;
+}
+
+.status-paused {
+    background: #FFF3D8;
+    color: #B96A00;
+}
+
+.pill {
+    display: inline-block;
+    background: #EFE4FF;
+    color: #6F2DE2;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.field-label {
+    color: #17002E;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 2px;
+}
+
+.field-value {
+    color: #4F465D;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+/* BUTTONS */
+.stButton > button {
+    border-radius: 12px;
+    font-weight: 800;
+    min-height: 40px;
+    border: 1px solid #E7D9FF;
+}
+
+div[data-testid="stTextInput"] input,
+div[data-testid="stTextArea"] textarea {
+    border-radius: 12px;
+    border: 1px solid #E7D9FF;
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 16px;
+    border-bottom: 1px solid #EFE7FF;
+}
+
+.stTabs [data-baseweb="tab"] {
+    color: #30273F;
+    font-weight: 800;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #6F2DE2 !important;
+}
 </style>
 """, unsafe_allow_html=True)
+
 
 DEFAULT_CREATORS = {
     "Jady Carvalho": {
@@ -143,6 +391,7 @@ DEFAULT_PLANNING = pd.DataFrame([
     {"Creator": "Vitória Guedes", "Objetivo": "Autoridade em skincare", "Pilar": "Beleza", "Ideia": "Review sincero de produtos favoritos", "Status": "Aprovado", "Prioridade": "Alta"},
 ])
 
+
 if "creators" not in st.session_state:
     st.session_state.creators = deepcopy(DEFAULT_CREATORS)
 if "opportunities" not in st.session_state:
@@ -160,6 +409,7 @@ if "editing_creator" not in st.session_state:
 if "deleting_creator" not in st.session_state:
     st.session_state.deleting_creator = None
 
+
 def initials_from_name(name):
     parts = [p for p in name.strip().split() if p]
     if not parts:
@@ -168,8 +418,10 @@ def initials_from_name(name):
         return parts[0][:2].upper()
     return (parts[0][0] + parts[-1][0]).upper()
 
+
 def get_creator_names():
     return list(st.session_state.creators.keys())
+
 
 def render_status(status):
     if status == "Ativo":
@@ -179,16 +431,29 @@ def render_status(status):
     else:
         st.info(status)
 
-st.sidebar.markdown('<div class="zoy-title">zoy</div>', unsafe_allow_html=True)
+
+def field(label, value):
+    st.markdown(f'<div class="field-label">{label}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="field-value">{value}</div>', unsafe_allow_html=True)
+
+
+# SIDEBAR
+st.sidebar.markdown('<div class="zoy-logo">zoy</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<div class="zoy-subtitle">ASSESSORIA</div>', unsafe_allow_html=True)
-menu = st.sidebar.radio(
-    "Menu",
-    ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", "Documentos"],
-    label_visibility="collapsed"
+
+menu_options = ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", "Documentos"]
+menu = st.sidebar.radio("Menu", menu_options, label_visibility="collapsed")
+
+st.sidebar.markdown(
+    """
+    <div class="sidebar-user">
+        <div class="sidebar-user-name">Jean</div>
+        <div class="sidebar-user-role">Responsável Assessoria</div>
+    </div>
+    """,
+    unsafe_allow_html=True
 )
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Jean**")
-st.sidebar.caption("Responsável")
+
 
 if menu == "Dashboard":
     st.markdown('<div class="page-title">Olá, Jean.</div>', unsafe_allow_html=True)
@@ -212,6 +477,7 @@ if menu == "Dashboard":
         st.info("Jady Carvalho: reunião mensal pendente.")
         st.info("Malu Borges: atualizar métricas do mês.")
         st.info("Vitória Guedes: revisar marcas alvo.")
+
 
 elif menu == "Influenciadores":
     header_left, header_right = st.columns([5, 1.4])
@@ -248,6 +514,7 @@ elif menu == "Influenciadores":
                 posicionamento = st.text_area("Posicionamento")
                 tom_voz = st.text_area("Tom de voz")
                 obs = st.text_area("Observações internas")
+
                 if st.form_submit_button("Salvar influenciador"):
                     if not nome:
                         st.error("Preencha o nome do influenciador.")
@@ -301,20 +568,28 @@ elif menu == "Influenciadores":
         st.session_state.selected_creator = names[0]
 
     with left:
-        st.markdown("### Influenciadores")
+        st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
         query = st.text_input("Buscar influenciador", placeholder="Buscar influenciador...", label_visibility="collapsed").lower()
         shown = [n for n in names if query in n.lower() or query in st.session_state.creators[n].get("handle", "").lower()]
 
         for name in shown:
             data = st.session_state.creators[name]
             is_selected = name == st.session_state.selected_creator
-            label = f"{data.get('initials', 'CR')}  |  {name}  |  {data.get('handle', '')}"
-            if is_selected:
-                st.markdown(f"**Selecionado:** {name}")
-            if st.button(label, key=f"select_{name}", use_container_width=True):
+            card_class = "creator-card-active" if is_selected else "creator-card"
+            status_text = data.get("status", "Ativo")
+            status_badge = "Ativo" if status_text == "Ativo" else status_text
+
+            st.markdown(f'<div class="{card_class}">', unsafe_allow_html=True)
+            c_avatar, c_info = st.columns([1, 5])
+            with c_avatar:
+                st.markdown(f'<div class="avatar-small">{data.get("initials", "CR")}</div>', unsafe_allow_html=True)
+            with c_info:
+                st.markdown(f"**{name}**")
+                st.caption(f"{data.get('handle', '')} • {status_badge}")
+            if st.button("Selecionar", key=f"select_{name}", use_container_width=True):
                 st.session_state.selected_creator = name
                 st.rerun()
-            st.caption(data.get("status", "Ativo"))
+            st.markdown("</div>", unsafe_allow_html=True)
 
         st.caption(f"{len(st.session_state.creators)} influenciadores cadastrados")
 
@@ -324,15 +599,24 @@ elif menu == "Influenciadores":
     with right:
         pc1, pc2 = st.columns([4, 1.3])
         with pc1:
-            st.markdown(
-                f'<div class="profile-box"><div style="display:flex;align-items:center;gap:22px;"><div class="avatar">{creator.get("initials","CR")}</div><div><div style="font-size:30px;font-weight:900;color:#17002E;">{selected}</div><div style="color:#6F2DE2;font-weight:800;">{creator.get("handle","")}</div><div class="muted">{creator.get("nicho","")}</div><div class="muted" style="margin-top:8px;">📍 {creator.get("cidade","")}</div></div></div></div>',
-                unsafe_allow_html=True
-            )
+            st.markdown('<div class="profile-card">', unsafe_allow_html=True)
+            h1, h2 = st.columns([0.8, 4])
+            with h1:
+                st.markdown(f'<div class="avatar">{creator.get("initials", "CR")}</div>', unsafe_allow_html=True)
+            with h2:
+                st.markdown(f'<div class="profile-name">{selected}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="profile-handle">{creator.get("handle", "")}</div>', unsafe_allow_html=True)
+                st.caption(creator.get("nicho", ""))
+                st.caption(f"📍 {creator.get('cidade', '')}")
+            st.markdown("</div>", unsafe_allow_html=True)
+
         with pc2:
+            st.markdown('<div class="profile-card">', unsafe_allow_html=True)
             st.markdown("**Responsável**")
             st.write(creator.get("responsavel", "Jean"))
             st.markdown("**Status**")
             render_status(creator.get("status", "Ativo"))
+            st.markdown("</div>", unsafe_allow_html=True)
 
         a1, a2, a3 = st.columns([1, 1, 4])
         with a1:
@@ -382,15 +666,18 @@ elif menu == "Influenciadores":
                         eag = st.text_input("Agência", value=creator.get("agencia", ""))
                         econta = st.text_input("Conta", value=creator.get("conta", ""))
                         eend = st.text_input("Endereço", value=creator.get("endereco", ""))
+
                     ebio = st.text_area("Bio estratégica", value=creator.get("bio", ""))
                     epos = st.text_area("Posicionamento", value=creator.get("posicionamento", ""))
                     etom = st.text_area("Tom de voz", value=creator.get("tom_voz", ""))
                     ems = st.text_area("Marcas dos sonhos", value=creator.get("marcas_sonho", ""))
                     enf = st.text_area("Marcas no-fit", value=creator.get("marcas_no_fit", ""))
                     eobs = st.text_area("Observações internas", value=creator.get("obs", ""))
+
                     s1, s2 = st.columns([1, 1])
                     save = s1.form_submit_button("Salvar alterações")
                     cancel = s2.form_submit_button("Cancelar")
+
                     if save:
                         updated = {
                             **creator,
@@ -418,51 +705,66 @@ elif menu == "Influenciadores":
                             "obs": eobs,
                             "responsavel": "Jean",
                         }
+
                         if enome != selected:
                             del st.session_state.creators[selected]
                             st.session_state.creators[enome] = updated
                             st.session_state.selected_creator = enome
                         else:
                             st.session_state.creators[selected] = updated
+
                         st.session_state.editing_creator = None
                         st.rerun()
+
                     if cancel:
                         st.session_state.editing_creator = None
                         st.rerun()
 
         tabs = st.tabs(["Dados gerais", "Posicionamento", "Métricas", "Histórico", "Arquivos"])
+
         with tabs[0]:
             ca, cb, cc = st.columns(3)
             with ca:
+                st.markdown('<div class="info-card">', unsafe_allow_html=True)
                 st.markdown("### Contato")
-                st.write(f"**Nome completo:** {creator.get('nome','')}")
-                st.write(f"**Nome artístico:** {creator.get('nome_artistico','')}")
-                st.write(f"**Instagram:** {creator.get('handle','')}")
-                st.write(f"**E-mail:** {creator.get('email','')}")
-                st.write(f"**Telefone:** {creator.get('telefone','')}")
+                field("Nome completo", creator.get("nome", ""))
+                field("Nome artístico", creator.get("nome_artistico", ""))
+                field("Instagram", creator.get("handle", ""))
+                field("E-mail", creator.get("email", ""))
+                field("Telefone", creator.get("telefone", ""))
+                st.markdown("</div>", unsafe_allow_html=True)
             with cb:
+                st.markdown('<div class="info-card">', unsafe_allow_html=True)
                 st.markdown("### Dados pessoais")
-                st.write(f"**Cidade:** {creator.get('cidade','')}")
-                st.write(f"**Endereço:** {creator.get('endereco','')}")
-                st.write(f"**Aniversário:** {creator.get('aniversario','')}")
-                st.write(f"**CPF/CNPJ:** {creator.get('cpf_cnpj','')}")
-                st.write(f"**Responsável:** {creator.get('responsavel','Jean')}")
+                field("Cidade", creator.get("cidade", ""))
+                field("Endereço", creator.get("endereco", ""))
+                field("Aniversário", creator.get("aniversario", ""))
+                field("CPF/CNPJ", creator.get("cpf_cnpj", ""))
+                field("Responsável", creator.get("responsavel", "Jean"))
+                st.markdown("</div>", unsafe_allow_html=True)
             with cc:
+                st.markdown('<div class="info-card">', unsafe_allow_html=True)
                 st.markdown("### Dados bancários")
-                st.write(f"**Pix:** {creator.get('pix','')}")
-                st.write(f"**Banco:** {creator.get('banco','')}")
-                st.write(f"**Agência:** {creator.get('agencia','')}")
-                st.write(f"**Conta:** {creator.get('conta','')}")
+                field("Pix", creator.get("pix", ""))
+                field("Banco", creator.get("banco", ""))
+                field("Agência", creator.get("agencia", ""))
+                field("Conta", creator.get("conta", ""))
+                st.markdown("</div>", unsafe_allow_html=True)
+
         with tabs[1]:
+            st.markdown('<div class="z-card">', unsafe_allow_html=True)
             st.markdown("### Posicionamento")
-            st.write(f"**Nicho:** {creator.get('nicho','')}")
-            st.write(f"**Bio estratégica:** {creator.get('bio','')}")
-            st.write(f"**Posicionamento:** {creator.get('posicionamento','')}")
-            st.write(f"**Tom de voz:** {creator.get('tom_voz','')}")
-            st.write(f"**Marcas dos sonhos:** {creator.get('marcas_sonho','')}")
-            st.write(f"**Marcas no-fit:** {creator.get('marcas_no_fit','')}")
-            st.write(f"**Observações internas:** {creator.get('obs','')}")
-            st.markdown("".join([f'<span class="pill">{t}</span>' for t in creator.get("tags", [])]), unsafe_allow_html=True)
+            field("Nicho", creator.get("nicho", ""))
+            field("Bio estratégica", creator.get("bio", ""))
+            field("Posicionamento", creator.get("posicionamento", ""))
+            field("Tom de voz", creator.get("tom_voz", ""))
+            field("Marcas dos sonhos", creator.get("marcas_sonho", ""))
+            field("Marcas no-fit", creator.get("marcas_no_fit", ""))
+            field("Observações internas", creator.get("obs", ""))
+            tags_html = "".join([f'<span class="pill">{t}</span>' for t in creator.get("tags", [])])
+            st.markdown(tags_html, unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+
         with tabs[2]:
             st.markdown("### Métricas principais")
             m1, m2, m3, m4, m5, m6 = st.columns(6)
@@ -474,23 +776,31 @@ elif menu == "Influenciadores":
             m6.metric("Crescimento", creator.get("crescimento", "0%"))
             st.markdown("### Histórico mensal")
             st.dataframe(st.session_state.metrics_history, use_container_width=True, hide_index=True)
+
         with tabs[3]:
+            st.markdown('<div class="z-card">', unsafe_allow_html=True)
             st.markdown("### Histórico")
             st.write("18/05 — Reunião mensal realizada")
             st.write("15/05 — Proposta enviada para marca")
             st.write("10/05 — Ajuste de posicionamento aprovado")
             st.write("02/05 — Atualização de métricas realizada")
+            st.markdown("</div>", unsafe_allow_html=True)
+
         with tabs[4]:
+            st.markdown('<div class="z-card">', unsafe_allow_html=True)
             st.markdown("### Arquivos")
             st.file_uploader("Mídia kit", type=["pdf", "pptx", "docx"])
             st.file_uploader("Contrato", type=["pdf", "docx"])
             st.file_uploader("Documentos pessoais", type=["pdf", "jpg", "png"])
             st.file_uploader("Comprovante bancário", type=["pdf", "jpg", "png"])
             st.file_uploader("Notas fiscais", type=["pdf", "xml"])
+            st.markdown("</div>", unsafe_allow_html=True)
+
 
 elif menu == "Planejamento":
     st.markdown('<div class="page-title">Planejamento</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Gestão estratégica mensal dos creators assessorados.</div>', unsafe_allow_html=True)
+
     col1, col2 = st.columns([1, 2])
     with col1:
         st.selectbox("Influenciador", get_creator_names())
@@ -503,16 +813,18 @@ elif menu == "Planejamento":
     with col2:
         st.markdown("### Plano do mês")
         st.text_area("Estratégia do mês", "Descrever a estratégia geral do creator para o mês.")
-        st.text_area("Conteúdos orgânicos sugeridos", "Ideia 1\nIdeia 2\nIdeia 3")
-        st.text_area("Collabs sugeridas", "Creator X — objetivo\nCreator Y — objetivo")
-        st.text_area("Marcas alvo", "Marca 1 — motivo fit\nMarca 2 — abordagem")
+        st.text_area("Conteúdos orgânicos sugeridos", "Ideia 1\\nIdeia 2\\nIdeia 3")
+        st.text_area("Collabs sugeridas", "Creator X — objetivo\\nCreator Y — objetivo")
+        st.text_area("Marcas alvo", "Marca 1 — motivo fit\\nMarca 2 — abordagem")
         st.text_area("Datas importantes", "Eventos, sazonalidades e datas relevantes.")
     st.markdown("### Planejamentos em andamento")
     st.dataframe(st.session_state.planning, use_container_width=True, hide_index=True)
 
+
 elif menu == "Oportunidades":
     st.markdown('<div class="page-title">Oportunidades</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Pipeline comercial da assessoria por creator.</div>', unsafe_allow_html=True)
+
     with st.expander("+ Nova oportunidade"):
         with st.form("new_opportunity"):
             c1, c2, c3 = st.columns(3)
@@ -537,6 +849,7 @@ elif menu == "Oportunidades":
                     "Observações": op_obs,
                 })
                 st.rerun()
+
     statuses = ["Lead recebido", "Abordagem", "Negociação", "Contrato", "Fechado", "Pago"]
     cols = st.columns(len(statuses))
     for col, status in zip(cols, statuses):
@@ -553,6 +866,7 @@ elif menu == "Oportunidades":
                 st.markdown("---")
     st.markdown("### Base completa")
     st.dataframe(pd.DataFrame(st.session_state.opportunities), use_container_width=True, hide_index=True)
+
 
 elif menu == "Documentos":
     st.markdown('<div class="page-title">Documentos</div>', unsafe_allow_html=True)
