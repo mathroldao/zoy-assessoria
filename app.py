@@ -1,6 +1,4 @@
-from pathlib import Path
 
-app_code = '''
 import streamlit as st
 import pandas as pd
 from copy import deepcopy
@@ -505,9 +503,9 @@ elif menu == "Planejamento":
     with col2:
         st.markdown("### Plano do mês")
         st.text_area("Estratégia do mês", "Descrever a estratégia geral do creator para o mês.")
-        st.text_area("Conteúdos orgânicos sugeridos", "Ideia 1\\nIdeia 2\\nIdeia 3")
-        st.text_area("Collabs sugeridas", "Creator X — objetivo\\nCreator Y — objetivo")
-        st.text_area("Marcas alvo", "Marca 1 — motivo fit\\nMarca 2 — abordagem")
+        st.text_area("Conteúdos orgânicos sugeridos", "Ideia 1\nIdeia 2\nIdeia 3")
+        st.text_area("Collabs sugeridas", "Creator X — objetivo\nCreator Y — objetivo")
+        st.text_area("Marcas alvo", "Marca 1 — motivo fit\nMarca 2 — abordagem")
         st.text_area("Datas importantes", "Eventos, sazonalidades e datas relevantes.")
     st.markdown("### Planejamentos em andamento")
     st.dataframe(st.session_state.planning, use_container_width=True, hide_index=True)
@@ -567,9 +565,3 @@ elif menu == "Documentos":
     st.file_uploader("Comprovante bancário", type=["pdf", "jpg", "png"])
     st.file_uploader("Notas fiscais", type=["pdf", "xml"])
     st.info("Na próxima etapa conectamos esses arquivos ao Google Drive ou banco de dados.")
-'''
-
-compile(app_code, "app.py", "exec")
-out = Path("/mnt/data/app_zoy_assessoria_limpo_final.py")
-out.write_text(app_code, encoding="utf-8")
-out.as_posix()
