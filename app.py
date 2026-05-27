@@ -1,4 +1,4 @@
-
+import requests
 import streamlit as st
 import pandas as pd
 from copy import deepcopy
@@ -233,106 +233,58 @@ div[data-testid="stTextArea"] textarea {
 """, unsafe_allow_html=True)
 
 
-DEFAULT_CREATORS = {
-    "Jady Carvalho": {
-        "nome": "Jady Carvalho",
-        "nome_artistico": "Jady Carvalho",
-        "initials": "JC",
-        "handle": "@jadycarvalho",
-        "nicho": "Lifestyle • Beleza • Humor",
-        "cidade": "São Paulo, SP",
-        "status": "Ativo",
-        "email": "jadycarvalho@gmail.com",
-        "telefone": "(11) 99999-9999",
-        "aniversario": "12/03",
-        "cpf_cnpj": "000.000.000-00",
-        "endereco": "São Paulo, SP",
-        "pix": "jadycarvalho@gmail.com",
-        "banco": "Itaú",
-        "agencia": "0001",
-        "conta": "00000-0",
-        "responsavel": "Jean",
-        "foto": "",
-        "bio": "Creator de lifestyle, beleza e humor com linguagem espontânea.",
-        "posicionamento": "Lifestyle real, rotina espontânea, beleza leve e humor do dia a dia.",
-        "tom_voz": "Espontâneo, leve, bem-humorado e próximo.",
-        "marcas_sonho": "Adidas, Sephora, Sallve, Natura",
-        "marcas_no_fit": "Marcas sem fit com beleza, lifestyle ou humor.",
-        "obs": "Tem ótima entrega em Reels. Público jovem e muito engajado.",
-        "seguidores": "132K",
-        "alcance": "48K",
-        "impressoes": "68K",
-        "stories": "18K",
-        "engajamento": "4,2%",
-        "crescimento": "2,3%",
-        "tags": ["Lifestyle", "Beleza", "Humor"],
-    },
-    "Malu Borges": {
-        "nome": "Malu Borges",
-        "nome_artistico": "Malu Borges",
-        "initials": "MB",
-        "handle": "@maluborges",
-        "nicho": "Fashion • Lifestyle",
-        "cidade": "São Paulo, SP",
-        "status": "Ativo",
-        "email": "malu@email.com",
-        "telefone": "(11) 98888-8888",
-        "aniversario": "04/08",
-        "cpf_cnpj": "000.000.000-00",
-        "endereco": "São Paulo, SP",
-        "pix": "malu@email.com",
-        "banco": "C6",
-        "agencia": "0001",
-        "conta": "00000-0",
-        "responsavel": "Jean",
-        "foto": "",
-        "bio": "Creator de moda e lifestyle urbano.",
-        "posicionamento": "Moda urbana, lifestyle aspiracional e rotina criativa.",
-        "tom_voz": "Fashion, urbano, aspiracional e direto.",
-        "marcas_sonho": "C&A, Amaro, Adidas, Arezzo",
-        "marcas_no_fit": "Marcas fora do universo fashion/lifestyle.",
-        "obs": "Boa aderência para marcas de moda e beleza.",
-        "seguidores": "89K",
-        "alcance": "31K",
-        "impressoes": "44K",
-        "stories": "12K",
-        "engajamento": "3,8%",
-        "crescimento": "1,8%",
-        "tags": ["Moda", "Lifestyle", "Beauty"],
-    },
-    "Vitória Guedes": {
-        "nome": "Vitória Guedes",
-        "nome_artistico": "Vitória Guedes",
-        "initials": "VG",
-        "handle": "@vitoriaguedes",
-        "nicho": "Beauty • Skincare",
-        "cidade": "Rio de Janeiro, RJ",
-        "status": "Ativo",
-        "email": "vitoria@email.com",
-        "telefone": "(21) 97777-7777",
-        "aniversario": "22/01",
-        "cpf_cnpj": "000.000.000-00",
-        "endereco": "Rio de Janeiro, RJ",
-        "pix": "vitoria@email.com",
-        "banco": "Nubank",
-        "agencia": "0001",
-        "conta": "00000-0",
-        "responsavel": "Jean",
-        "foto": "",
-        "bio": "Creator focada em beleza, skincare e rotina.",
-        "posicionamento": "Beleza acessível, skincare e rotina feminina.",
-        "tom_voz": "Educativo, próximo e leve.",
-        "marcas_sonho": "Sallve, Creamy, Natura, Sephora",
-        "marcas_no_fit": "Marcas sem conexão com beleza ou rotina.",
-        "obs": "Boa entrega em stories e reviews.",
-        "seguidores": "76K",
-        "alcance": "22K",
-        "impressoes": "29K",
-        "stories": "9K",
-        "engajamento": "3,1%",
-        "crescimento": "1,1%",
-        "tags": ["Beauty", "Skincare", "Review"],
-    },
+API_URL = "https://script.google.com/macros/s/AKfycbx9Qa_fRrUUAbRWomSoKFkwZqiLTzRlqUlvlBnxC9juMMcEmt9G_y4iKXM3okgB_3ZH/exec"
+
+def carregar_influenciadores():
+    try:
+        response = requests.get(API_URL)
+
+        if response.status_code == 200:
+            dados = response.json()
+            creators = {}
+
+            for item in dados:
+                nome = item.get("nome_completo", "Sem nome")
+
+                creators[nome] = {
+                    "nome": item.get("nome_completo", ""),
+                    "nome_artistico": item.get("nome_artistico", ""),
+                    "iniciais": nome[:2].upper(),
+                    "handle": item.get("instagram", ""),
+                    "nicho": item.get("nicho", ""),
+                    "cidade": item.get("cidade", ""),
+                    "status": item.get("status", "Ativo"),
+                    "email": item.get("email", ""),
+                    "telefone": item.get("telefone", ""),
+                    "aniversario": item.get("aniversario", ""),
+                    "cpf_cnpj": item.get("cpf_cnpj", ""),
+                    "endereco": item.get("cidade", ""),
+                    "pix": item.get("pix", ""),
+                    "banco": item.get("banco", ""),
+                    "agencia": item.get("agencia", ""),
+                    "conta": item.get("conta", ""),
+                    "foto": item.get("foto", ""),
+                    "bio": item.get("bio", ""),
+                    "posicionamento": item.get("posicionamento", ""),
+                    "tom_voz": "",
+                    "marcas_sonho": "",
+                    "marcas_no_fit": "",
+                    "obs": "",
+                    "seguidores": "",
+                    "alcance": "",
+                    "impressoes": "",
+                    "engajamento": ""
+                }
+
+            return creators
+
+    except:
+        return {}
+
+    return {}
+
+if "creators" not in st.session_state:
+    st.session_state.creators = carregar_influenciadores()
 }
 
 DEFAULT_OPPORTUNITIES = [
