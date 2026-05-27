@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 from copy import deepcopy
+import base64
 
 st.set_page_config(page_title="Zoy Assessoria", page_icon="💜", layout="wide")
 
@@ -31,6 +32,7 @@ section[data-testid="stSidebar"] * {
     font-weight: 950;
     letter-spacing: -2px;
     margin-bottom: -8px;
+    color: white !important;
 }
 
 .zoy-subtitle {
@@ -41,23 +43,28 @@ section[data-testid="stSidebar"] * {
     font-weight: 800;
 }
 
-.sidebar-user {
-    margin-top: 36px;
-    padding: 16px;
-    border-radius: 18px;
+section[data-testid="stSidebar"] .stButton > button {
+    background: rgba(255,255,255,0.10) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255,255,255,0.20) !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+}
+
+.sidebar-help {
+    margin-top: 34px;
+    padding: 14px;
+    border-radius: 16px;
     background: rgba(255,255,255,0.10);
     border: 1px solid rgba(255,255,255,0.18);
-}
-
-.sidebar-user-name {
-    font-weight: 900;
-    color: white;
-}
-
-.sidebar-user-role {
     color: #E9DDFF !important;
     font-size: 13px;
-    margin-top: 4px;
 }
 
 /* TÍTULOS */
@@ -88,15 +95,6 @@ section[data-testid="stSidebar"] * {
 }
 
 /* CARDS */
-.clean-card {
-    background: #FFFFFF;
-    border: 1px solid #E9DFFF;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: none;
-    margin-bottom: 16px;
-}
-
 .profile-card {
     background: #FFFFFF;
     border: 1px solid #E9DFFF;
@@ -114,49 +112,54 @@ section[data-testid="stSidebar"] * {
     min-height: 250px;
 }
 
-.creator-list-item {
-    background: #FFFFFF;
-    border: 1px solid #EFE7FF;
-    border-radius: 16px;
-    padding: 14px;
-    margin-bottom: 10px;
-}
-
-.creator-list-item-active {
-    background: #F7F2FF;
-    border: 1px solid #D7C4FF;
-    border-radius: 16px;
-    padding: 14px;
-    margin-bottom: 10px;
+.simple-list-item {
+    border-bottom: 1px solid #EFE7FF;
+    padding: 10px 0 8px 0;
 }
 
 /* AVATARS */
 .avatar {
-    width: 78px;
-    height: 78px;
+    width: 86px;
+    height: 86px;
     border-radius: 50%;
     background: linear-gradient(135deg, #B98CFF, #6F2DE2);
     color: white;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 950;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 86px;
+    height: 86px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .avatar-small {
-    width: 44px;
-    height: 44px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: linear-gradient(135deg, #B98CFF, #6F2DE2);
     color: white;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 900;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 12px;
+    margin-right: 10px;
     vertical-align: middle;
+    overflow: hidden;
+}
+
+.avatar-small img {
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .profile-name {
@@ -249,6 +252,7 @@ DEFAULT_CREATORS = {
         "agencia": "0001",
         "conta": "00000-0",
         "responsavel": "Jean",
+        "foto": "",
         "bio": "Creator de lifestyle, beleza e humor com linguagem espontânea.",
         "posicionamento": "Lifestyle real, rotina espontânea, beleza leve e humor do dia a dia.",
         "tom_voz": "Espontâneo, leve, bem-humorado e próximo.",
@@ -281,6 +285,7 @@ DEFAULT_CREATORS = {
         "agencia": "0001",
         "conta": "00000-0",
         "responsavel": "Jean",
+        "foto": "",
         "bio": "Creator de moda e lifestyle urbano.",
         "posicionamento": "Moda urbana, lifestyle aspiracional e rotina criativa.",
         "tom_voz": "Fashion, urbano, aspiracional e direto.",
@@ -313,6 +318,7 @@ DEFAULT_CREATORS = {
         "agencia": "0001",
         "conta": "00000-0",
         "responsavel": "Jean",
+        "foto": "",
         "bio": "Creator focada em beleza, skincare e rotina.",
         "posicionamento": "Beleza acessível, skincare e rotina feminina.",
         "tom_voz": "Educativo, próximo e leve.",
@@ -396,6 +402,23 @@ def field(label, value):
     st.markdown(f'<div class="field-value">{value}</div>', unsafe_allow_html=True)
 
 
+def image_to_data_url(uploaded_file):
+    if uploaded_file is None:
+        return ""
+    data = uploaded_file.getvalue()
+    encoded = base64.b64encode(data).decode()
+    return f"data:{uploaded_file.type};base64,{encoded}"
+
+
+def avatar_html(data, size="large"):
+    foto = data.get("foto", "")
+    initials = data.get("initials", "CR")
+    cls = "avatar" if size == "large" else "avatar-small"
+    if foto:
+        return f'<div class="{cls}"><img src="{foto}"></div>'
+    return f'<div class="{cls}">{initials}</div>'
+
+
 # SIDEBAR SEM TIQUES
 st.sidebar.markdown('<div class="zoy-logo">zoy</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<div class="zoy-subtitle">ASSESSORIA</div>', unsafe_allow_html=True)
@@ -414,9 +437,8 @@ menu = st.session_state.menu
 
 st.sidebar.markdown(
     """
-    <div class="sidebar-user">
-        <div class="sidebar-user-name">Jean</div>
-        <div class="sidebar-user-role">Responsável Assessoria</div>
+    <div class="sidebar-help">
+        Sistema interno de gestão da assessoria.
     </div>
     """,
     unsafe_allow_html=True
@@ -424,8 +446,8 @@ st.sidebar.markdown(
 
 
 if menu == "Dashboard":
-    st.markdown('<div class="page-title">Olá, Jean.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-subtitle">Aqui está o panorama da assessoria hoje.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Dashboard</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">Panorama da assessoria.</div>', unsafe_allow_html=True)
 
     open_opps = len([o for o in st.session_state.opportunities if o["Status"] not in ["Pago", "Perdido"]])
     closed_opps = len([o for o in st.session_state.opportunities if o["Status"] == "Fechado"])
@@ -506,7 +528,8 @@ elif menu == "Influenciadores":
                             "banco": banco,
                             "agencia": agencia,
                             "conta": conta,
-                            "responsavel": "Jean",
+                            "responsavel": "",
+                            "foto": "",
                             "bio": bio,
                             "posicionamento": posicionamento,
                             "tom_voz": tom_voz,
@@ -525,7 +548,7 @@ elif menu == "Influenciadores":
                         st.session_state.show_new_creator = False
                         st.rerun()
 
-    left, right = st.columns([1.05, 3.4], gap="large")
+    left, right = st.columns([0.9, 3.6], gap="large")
     names = get_creator_names()
 
     if not names:
@@ -542,19 +565,12 @@ elif menu == "Influenciadores":
 
         for name in shown:
             data = st.session_state.creators[name]
-            active_class = "creator-list-item-active" if name == st.session_state.selected_creator else "creator-list-item"
-            st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
-            c_avatar, c_info = st.columns([1, 5])
-            with c_avatar:
-                st.markdown(f'<div class="avatar-small">{data.get("initials", "CR")}</div>', unsafe_allow_html=True)
-            with c_info:
-                st.markdown(f"**{name}**")
-                st.caption(f"{data.get('handle', '')} • {data.get('nicho', '')}")
-                st.caption(data.get("status", "Ativo"))
-            if st.button("Selecionar", key=f"select_{name}", use_container_width=True):
+            is_selected = name == st.session_state.selected_creator
+            prefix = "• " if is_selected else ""
+            if st.button(f"{prefix}{name}", key=f"select_{name}", use_container_width=True):
                 st.session_state.selected_creator = name
                 st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.caption(data.get("handle", ""))
 
         st.caption(f"{len(st.session_state.creators)} influenciadores cadastrados")
 
@@ -562,34 +578,32 @@ elif menu == "Influenciadores":
     creator = st.session_state.creators[selected]
 
     with right:
-        pc1, pc2 = st.columns([4, 1.3])
-        with pc1:
-            st.markdown('<div class="profile-card">', unsafe_allow_html=True)
-            h1, h2 = st.columns([0.8, 4])
-            with h1:
-                st.markdown(f'<div class="avatar">{creator.get("initials", "CR")}</div>', unsafe_allow_html=True)
-            with h2:
-                st.markdown(f'<div class="profile-name">{selected}</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="profile-handle">{creator.get("handle", "")}</div>', unsafe_allow_html=True)
-                st.caption(creator.get("nicho", ""))
-                st.caption(f"📍 {creator.get('cidade', '')}")
-            st.markdown("</div>", unsafe_allow_html=True)
-
-        with pc2:
-            st.markdown('<div class="profile-card">', unsafe_allow_html=True)
-            st.markdown("**Responsável**")
-            st.write(creator.get("responsavel", "Jean"))
+        st.markdown('<div class="profile-card">', unsafe_allow_html=True)
+        h1, h2, h3 = st.columns([0.7, 3.2, 1.1])
+        with h1:
+            st.markdown(avatar_html(creator, "large"), unsafe_allow_html=True)
+        with h2:
+            st.markdown(f'<div class="profile-name">{selected}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="profile-handle">{creator.get("handle", "")}</div>', unsafe_allow_html=True)
+            st.caption(creator.get("nicho", ""))
+            st.caption(f"📍 {creator.get('cidade', '')}")
+        with h3:
             st.markdown("**Status**")
             render_status(creator.get("status", "Ativo"))
-            st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        a1, a2, a3 = st.columns([1, 1, 4])
+        a1, a2, a3, a4 = st.columns([1, 1, 1.2, 3.5])
         with a1:
             if st.button("Editar dados", use_container_width=True):
                 st.session_state.editing_creator = selected
         with a2:
             if st.button("Excluir", use_container_width=True):
                 st.session_state.deleting_creator = selected
+        with a3:
+            photo = st.file_uploader("Foto", type=["png", "jpg", "jpeg"], label_visibility="collapsed", key=f"photo_{selected}")
+            if photo is not None:
+                st.session_state.creators[selected]["foto"] = image_to_data_url(photo)
+                st.rerun()
 
         if st.session_state.deleting_creator == selected:
             st.error(f"Tem certeza que deseja excluir {selected}?")
@@ -668,7 +682,6 @@ elif menu == "Influenciadores":
                             "marcas_sonho": ems,
                             "marcas_no_fit": enf,
                             "obs": eobs,
-                            "responsavel": "Jean",
                         }
 
                         if enome != selected:
@@ -702,7 +715,6 @@ elif menu == "Influenciadores":
                 field("Endereço", creator.get("endereco", ""))
                 field("Aniversário", creator.get("aniversario", ""))
                 field("CPF/CNPJ", creator.get("cpf_cnpj", ""))
-                field("Responsável", creator.get("responsavel", "Jean"))
             with cc:
                 st.markdown("### Dados bancários")
                 field("Pix", creator.get("pix", ""))
