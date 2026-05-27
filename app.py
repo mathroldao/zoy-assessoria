@@ -284,8 +284,6 @@ for item in dados:
 
 return creators
 
-    return {}
-
 if "creators" not in st.session_state:
     st.session_state.creators = carregar_influenciadores()
 
