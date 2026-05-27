@@ -344,6 +344,8 @@ for option in ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", 
     label = "→ " + option if st.session_state.menu == option else option
     if st.sidebar.button(label, key=f"menu_{option}", use_container_width=True):
         st.session_state.menu = option
+        if option == "Influenciadores":
+            st.session_state.show_new_creator = False
         st.rerun()
 
 menu = st.session_state.menu
@@ -489,18 +491,13 @@ elif menu == "Influenciadores":
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown('<div class="profile-actions">', unsafe_allow_html=True)
-        a1, a2, a3, a4 = st.columns([1, 1, 1.2, 3.5])
+        a1, a2, a3 = st.columns([1, 1, 4])
         with a1:
             if st.button("Editar dados", use_container_width=True):
                 st.session_state.editing_creator = selected
         with a2:
             if st.button("Excluir", use_container_width=True):
                 st.session_state.deleting_creator = selected
-        with a3:
-            photo = st.file_uploader("Foto", type=["png", "jpg", "jpeg"], label_visibility="collapsed", key=f"photo_{selected}")
-            if photo is not None:
-                st.session_state.creators[selected]["foto"] = image_to_data_url(photo)
-                st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
 
         if st.session_state.deleting_creator == selected:
@@ -633,14 +630,55 @@ elif menu == "Influenciadores":
 
         with tabs[2]:
             st.markdown("### Métricas principais")
-            m1, m2, m3, m4, m5, m6 = st.columns(6)
-            m1.metric("Seguidores", creator.get("seguidores", "0"), creator.get("crescimento", "0%"))
-            m2.metric("Alcance", creator.get("alcance", "0"))
-            m3.metric("Impressões", creator.get("impressoes", "0"))
-            m4.metric("Stories", creator.get("stories", "0"))
-            m5.metric("Engajamento", creator.get("engajamento", "0%"))
-            m6.metric("Crescimento", creator.get("crescimento", "0%"))
+
+            mc1, mc2, mc3 = st.columns(3)
+            mc4, mc5, mc6 = st.columns(3)
+
+            edit_seguidores = mc1.text_input("Seguidores", value=creator.get("seguidores", ""), key=f"met_seguidores_{selected}")
+            edit_alcance = mc2.text_input("Alcance", value=creator.get("alcance", ""), key=f"met_alcance_{selected}")
+            edit_impressoes = mc3.text_input("Impressões", value=creator.get("impressoes", ""), key=f"met_impressoes_{selected}")
+            edit_stories = mc4.text_input("Stories", value=creator.get("stories", ""), key=f"met_stories_{selected}")
+            edit_engajamento = mc5.text_input("Engajamento", value=creator.get("engajamento", ""), key=f"met_engajamento_{selected}")
+            edit_crescimento = mc6.text_input("Crescimento", value=creator.get("crescimento", ""), key=f"met_crescimento_{selected}")
+
+            if st.button("Salvar métricas", use_container_width=True):
+                payload = {
+                    "nome_completo": creator.get("nome", selected),
+                    "nome_artistico": creator.get("nome_artistico", selected),
+                    "instagram": creator.get("handle", ""),
+                    "email": creator.get("email", ""),
+                    "telefone": creator.get("telefone", ""),
+                    "cidade": creator.get("cidade", ""),
+                    "nicho": creator.get("nicho", ""),
+                    "aniversario": creator.get("aniversario", ""),
+                    "cpf_cnpj": creator.get("cpf_cnpj", ""),
+                    "pix": creator.get("pix", ""),
+                    "banco": creator.get("banco", ""),
+                    "agencia": creator.get("agencia", ""),
+                    "conta": creator.get("conta", ""),
+                    "bio": creator.get("bio", ""),
+                    "posicionamento": creator.get("posicionamento", ""),
+                    "status": creator.get("status", "Ativo"),
+                    "foto": creator.get("foto", ""),
+                    "seguidores": edit_seguidores,
+                    "alcance": edit_alcance,
+                    "impressoes": edit_impressoes,
+                    "stories": edit_stories,
+                    "engajamento": edit_engajamento,
+                    "crescimento": edit_crescimento
+                }
+
+                ok = atualizar_influenciador_sheets(selected, payload)
+
+                if ok:
+                    refresh_creators()
+                    st.success("Métricas atualizadas.")
+                    st.rerun()
+                else:
+                    st.error("Erro ao salvar métricas no Google Sheets.")
+
             st.markdown("### Histórico mensal")
+            st.caption("O histórico mensal ainda será conectado a uma aba própria de métricas. Por enquanto, esta tabela é apenas visual.")
             st.dataframe(st.session_state.metrics_history, use_container_width=True, hide_index=True)
 
         with tabs[3]:
