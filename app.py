@@ -12,127 +12,123 @@ API_URL = "https://script.google.com/macros/s/AKfycbx9Qa_fRrUUAbRWomSoKFkwZqiLTz
 
 st.markdown("""
 <style>
-.stApp{
-    background:#FFFFFF;
+:root{
+    --zoy-purple:#5E19D6;
+    --zoy-deep:#16002E;
+    --zoy-soft:#F7F3FF;
+    --zoy-border:#E9DFFF;
+    --zoy-muted:#7A7189;
 }
 
-.block-container{
-    padding-top:1.8rem;
-    padding-bottom:2rem;
-    max-width:100%;
-}
+.stApp{background:#fff;color:#1f1830}
+.block-container{padding-top:2rem;padding-bottom:2rem;max-width:100%;padding-left:3.2rem;padding-right:3.2rem}
 
+/* SIDEBAR */
 section[data-testid="stSidebar"]{
-    background:linear-gradient(180deg,#1F003D 0%, #4D14B8 100%);
-    border-right:1px solid rgba(255,255,255,0.08);
+    background:linear-gradient(180deg,#25004A 0%,#3A067D 55%,#5E19D6 100%);
+}
+section[data-testid="stSidebar"] *{color:white!important}
+section[data-testid="stSidebar"] > div{padding-top:2.2rem}
+.zoy-logo{font-size:42px;font-weight:950;letter-spacing:-2px;margin-bottom:-8px;color:white!important;line-height:.9}
+.zoy-subtitle{font-size:11px;letter-spacing:4px;color:#DCCBFF!important;margin-bottom:32px;font-weight:800}
+section[data-testid="stSidebar"] .stButton>button{
+    background:transparent!important;
+    color:rgba(255,255,255,.82)!important;
+    border:0!important;
+    border-radius:14px!important;
+    font-weight:800!important;
+    text-align:left!important;
+    justify-content:flex-start!important;
+    min-height:44px!important;
+    padding:10px 14px!important;
+    box-shadow:none!important;
+}
+section[data-testid="stSidebar"] .stButton>button:hover{
+    background:rgba(255,255,255,.10)!important;
+    color:#fff!important;
+}
+.sidebar-help{
+    margin-top:34px;
+    padding:14px 2px;
+    color:#E9DDFF!important;
+    font-size:13px;
+    line-height:1.45;
 }
 
-section[data-testid="stSidebar"] *{
+/* HEADER */
+.page-title{font-size:34px;font-weight:950;color:#17002E;letter-spacing:-1px;margin-bottom:4px;line-height:1}
+.page-subtitle{color:#756B86;font-size:15px;margin-bottom:26px}
+.section-title{font-size:18px;font-weight:900;color:#17002E;margin-bottom:12px}
+.muted{color:#756B86;font-size:14px}
+
+/* BOTÕES */
+.stButton>button{
+    border-radius:13px!important;
+    font-weight:800!important;
+    min-height:38px!important;
+    border:1px solid #E9DFFF!important;
+    background:#fff!important;
+    color:#201533!important;
+    box-shadow:none!important;
+}
+.stButton>button:hover{border-color:#C9ADFF!important;color:#5E19D6!important;background:#FBF8FF!important}
+.stButton>button[kind="primary"]{
+    background:#5E19D6!important;
+    color:white!important;
+    border:1px solid #5E19D6!important;
+}
+.stButton>button[kind="primary"]:hover{
+    background:#4A0FB4!important;
+    border-color:#4A0FB4!important;
     color:white!important;
 }
 
-.zoy-logo{
-    font-size:42px;
-    font-weight:950;
-    letter-spacing:-2px;
-    margin-bottom:-8px;
+/* INPUTS */
+div[data-testid="stTextInput"] input,div[data-testid="stTextArea"] textarea{
+    border-radius:13px!important;
+    border:1px solid #E9DFFF!important;
+    background:#FAFAFD!important;
 }
 
-.zoy-subtitle{
-    font-size:11px;
-    letter-spacing:4px;
-    color:#D8C8FF!important;
-    margin-bottom:34px;
-    font-weight:800;
+/* LAYOUT */
+.vertical-separator{
+    width:1px;
+    background:#EFE7FF;
+    min-height:720px;
+    margin:0 auto;
 }
-
-section[data-testid="stSidebar"] .stButton > button{
-    width:100%;
-    background:transparent!important;
-    border:none!important;
-    border-radius:14px!important;
-    min-height:46px!important;
-    text-align:left!important;
-    font-weight:700!important;
-    font-size:14px!important;
-    color:rgba(255,255,255,0.78)!important;
-    transition:all .2s ease;
-    box-shadow:none!important;
-}
-
-section[data-testid="stSidebar"] .stButton > button:hover{
-    background:rgba(255,255,255,0.08)!important;
-    color:#FFFFFF!important;
-    transform:translateX(2px);
-}
-
-.page-title{
-    font-size:40px;
-    font-weight:950;
-    color:#17002E;
-    letter-spacing:-1.5px;
-    margin-bottom:2px;
-}
-
-.page-subtitle{
-    color:#7A718A;
-    font-size:14px;
-    margin-bottom:28px;
-}
-
 .profile-card{
-    background:#FFFFFF;
-    border:none;
+    background:#fff;
+    border:1px solid #E9DFFF;
     border-radius:24px;
-    padding:8px 0 24px 0;
-    box-shadow:none;
-}
-
-.info-card{
-    background:#FFFFFF;
-    border:1px solid #F1EAFE;
-    border-radius:20px;
     padding:22px;
+    box-shadow:none;
+    margin-bottom:14px;
 }
+.profile-actions{margin-top:4px;margin-bottom:20px}
+.info-card{background:#fff;border:1px solid #E9DFFF;border-radius:18px;padding:20px;min-height:250px}
 
-.stButton > button{
-    border-radius:14px!important;
-    border:1px solid #EEE6FF!important;
-    min-height:42px!important;
-    font-weight:700!important;
-    box-shadow:none!important;
+/* AVATAR */
+.avatar{
+    width:86px;height:86px;border-radius:50%;
+    background:linear-gradient(135deg,#B98CFF,#6F2DE2);
+    color:white;font-size:30px;font-weight:950;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
+.avatar img{width:86px;height:86px;object-fit:cover;border-radius:50%}
+.profile-name{font-size:30px;font-weight:950;color:#17002E;letter-spacing:-.8px;margin-bottom:4px;line-height:1.05}
+.profile-handle{color:#5E19D6;font-weight:900;font-size:14px;margin-bottom:6px}
 
-.stButton > button:hover{
-    border:1px solid #D8C8FF!important;
-}
+.pill{display:inline-block;background:#EFE4FF;color:#6F2DE2;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:900;margin-right:6px;margin-bottom:6px}
+.field-label{color:#17002E;font-size:13px;font-weight:900;margin-bottom:2px}.field-value{color:#4F465D;font-size:14px;margin-bottom:14px}
 
-div[data-testid="stTextInput"] input,
-div[data-testid="stTextArea"] textarea{
-    border-radius:14px!important;
-    border:1px solid #EEE6FF!important;
-    background:#FFFFFF!important;
-}
+/* LISTA DE INFLUENCIADORES */
+.creator-count{font-size:13px;color:#7A7189;margin-top:12px}
 
-.stTabs [data-baseweb="tab-list"]{
-    gap:20px;
-    border-bottom:1px solid #F3EDFF;
-}
-
-.stTabs [data-baseweb="tab"]{
-    color:#5B516A;
-    font-weight:700;
-    padding-left:0;
-    padding-right:0;
-}
-
-.stTabs [aria-selected="true"]{
-    color:#6F2DE2!important;
-}
-
-hr{
-    display:none;
-}
+/* TABS */
+.stTabs [data-baseweb="tab-list"]{gap:18px;border-bottom:1px solid #EFE7FF;margin-top:14px}
+.stTabs [data-baseweb="tab"]{color:#30273F;font-weight:800;padding-left:0;padding-right:0}
+.stTabs [aria-selected="true"]{color:#5E19D6!important}
 </style>
 """, unsafe_allow_html=True)
 
@@ -313,7 +309,7 @@ st.sidebar.markdown('<div class="zoy-logo">zoy</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<div class="zoy-subtitle">ASSESSORIA</div>', unsafe_allow_html=True)
 
 for option in ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", "Documentos"]:
-    label = "● " + option if st.session_state.menu == option else option
+    label = "→ " + option if st.session_state.menu == option else option
     if st.sidebar.button(label, key=f"menu_{option}", use_container_width=True):
         st.session_state.menu = option
         st.rerun()
@@ -349,7 +345,7 @@ elif menu == "Influenciadores":
         st.markdown('<div class="page-title">Influenciadores</div>', unsafe_allow_html=True)
         st.markdown('<div class="page-subtitle">Cadastro, métricas, posicionamento e histórico dos creators.</div>', unsafe_allow_html=True)
     with header_right:
-        if st.button("+ Novo influenciador", use_container_width=True):
+        if st.button("+ Novo influenciador", type="primary", use_container_width=True):
             st.session_state.show_new_creator = True
 
     if st.session_state.show_new_creator:
@@ -412,8 +408,11 @@ elif menu == "Influenciadores":
                         else:
                             st.error("Não consegui salvar no Google Sheets. Verifique a implantação do Apps Script.")
 
-    left, right = st.columns([0.9, 3.6], gap="large")
+    left, sep, right = st.columns([0.92, 0.06, 3.72], gap="large")
     names = get_creator_names()
+
+    with sep:
+        st.markdown('<div class="vertical-separator"></div>', unsafe_allow_html=True)
 
     with left:
         st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
@@ -424,12 +423,12 @@ elif menu == "Influenciadores":
             shown = [n for n in names if query in n.lower() or query in st.session_state.creators[n].get("handle", "").lower()]
             for name in shown:
                 data = st.session_state.creators[name]
-                prefix = "• " if name == st.session_state.selected_creator else ""
-                if st.button(f"{prefix}{name}", key=f"select_{name}", use_container_width=True):
+                prefix = "→ " if name == st.session_state.selected_creator else ""
+                handle_label = data.get("handle", "")
+                if st.button(f"{prefix}{name}  ·  {handle_label}", key=f"select_{name}", use_container_width=True):
                     st.session_state.selected_creator = name
                     st.rerun()
-                st.caption(data.get("handle", ""))
-            st.caption(f"{len(st.session_state.creators)} influenciadores cadastrados")
+            st.markdown(f'<div class="creator-count">{len(st.session_state.creators)} influenciadores cadastrados</div>', unsafe_allow_html=True)
 
     if not names:
         with right:
@@ -457,6 +456,7 @@ elif menu == "Influenciadores":
             render_status(creator.get("status", "Ativo"))
         st.markdown("</div>", unsafe_allow_html=True)
 
+        st.markdown('<div class="profile-actions">', unsafe_allow_html=True)
         a1, a2, a3, a4 = st.columns([1, 1, 1.2, 3.5])
         with a1:
             if st.button("Editar dados", use_container_width=True):
@@ -469,6 +469,7 @@ elif menu == "Influenciadores":
             if photo is not None:
                 st.session_state.creators[selected]["foto"] = image_to_data_url(photo)
                 st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
 
         if st.session_state.deleting_creator == selected:
             st.warning("Tem certeza que deseja excluir este influenciador?")
