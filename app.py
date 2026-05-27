@@ -1,321 +1,177 @@
+
+import base64
+from copy import deepcopy
+
+import pandas as pd
 import requests
 import streamlit as st
-import pandas as pd
-from copy import deepcopy
-import base64
 
 st.set_page_config(page_title="Zoy Assessoria", page_icon="💜", layout="wide")
 
+API_URL = "https://script.google.com/macros/s/AKfycbx9Qa_fRrUUAbRWomSoKFkwZqiLTzRlqUlvlBnxC9juMMcEmt9G_y4iKXM3okgB_3ZH/exec"
+
 st.markdown("""
 <style>
-.stApp {
-    background: #FFFFFF;
-}
-
-.block-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    max-width: 100%;
-}
-
-/* SIDEBAR ROXA */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #26004D 0%, #5E19D6 100%);
-}
-
-section[data-testid="stSidebar"] * {
-    color: white !important;
-}
-
-.zoy-logo {
-    font-size: 42px;
-    font-weight: 950;
-    letter-spacing: -2px;
-    margin-bottom: -8px;
-    color: white !important;
-}
-
-.zoy-subtitle {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: #DCCBFF !important;
-    margin-bottom: 28px;
-    font-weight: 800;
-}
-
-section[data-testid="stSidebar"] .stButton > button {
-    background: rgba(255,255,255,0.10) !important;
-    color: #FFFFFF !important;
-    border: 1px solid rgba(255,255,255,0.18) !important;
-    border-radius: 12px !important;
-    font-weight: 800 !important;
-    text-align: left !important;
-}
-
-section[data-testid="stSidebar"] .stButton > button:hover {
-    background: rgba(255,255,255,0.20) !important;
-    border: 1px solid rgba(255,255,255,0.28) !important;
-}
-
-.sidebar-help {
-    margin-top: 34px;
-    padding: 14px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.10);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: #E9DDFF !important;
-    font-size: 13px;
-}
-
-/* TÍTULOS */
-.page-title {
-    font-size: 36px;
-    font-weight: 950;
-    color: #17002E;
-    letter-spacing: -1px;
-    margin-bottom: 2px;
-}
-
-.page-subtitle {
-    color: #756B86;
-    font-size: 15px;
-    margin-bottom: 24px;
-}
-
-.section-title {
-    font-size: 20px;
-    font-weight: 900;
-    color: #17002E;
-    margin-bottom: 16px;
-}
-
-.muted {
-    color: #756B86;
-    font-size: 14px;
-}
-
-/* CARDS */
-.profile-card {
-    background: #FFFFFF;
-    border: 1px solid #E9DFFF;
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: none;
-    margin-bottom: 16px;
-}
-
-.info-card {
-    background: #FFFFFF;
-    border: 1px solid #E9DFFF;
-    border-radius: 18px;
-    padding: 20px;
-    min-height: 250px;
-}
-
-.simple-list-item {
-    border-bottom: 1px solid #EFE7FF;
-    padding: 10px 0 8px 0;
-}
-
-/* AVATARS */
-.avatar {
-    width: 86px;
-    height: 86px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #B98CFF, #6F2DE2);
-    color: white;
-    font-size: 30px;
-    font-weight: 950;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.avatar img {
-    width: 86px;
-    height: 86px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.avatar-small {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #B98CFF, #6F2DE2);
-    color: white;
-    font-size: 12px;
-    font-weight: 900;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-    vertical-align: middle;
-    overflow: hidden;
-}
-
-.avatar-small img {
-    width: 34px;
-    height: 34px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.profile-name {
-    font-size: 31px;
-    font-weight: 950;
-    color: #17002E;
-    letter-spacing: -0.8px;
-    margin-bottom: 4px;
-}
-
-.profile-handle {
-    color: #6F2DE2;
-    font-weight: 900;
-    font-size: 15px;
-    margin-bottom: 6px;
-}
-
-.pill {
-    display: inline-block;
-    background: #EFE4FF;
-    color: #6F2DE2;
-    padding: 7px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 900;
-    margin-right: 6px;
-    margin-bottom: 6px;
-}
-
-.field-label {
-    color: #17002E;
-    font-size: 13px;
-    font-weight: 900;
-    margin-bottom: 2px;
-}
-
-.field-value {
-    color: #4F465D;
-    font-size: 14px;
-    margin-bottom: 14px;
-}
-
-/* BOTÕES */
-.stButton > button {
-    border-radius: 12px;
-    font-weight: 800;
-    min-height: 40px;
-    border: 1px solid #E9DFFF;
-}
-
-div[data-testid="stTextInput"] input,
-div[data-testid="stTextArea"] textarea {
-    border-radius: 12px;
-    border: 1px solid #E9DFFF;
-}
-
-.stTabs [data-baseweb="tab-list"] {
-    gap: 16px;
-    border-bottom: 1px solid #EFE7FF;
-}
-
-.stTabs [data-baseweb="tab"] {
-    color: #30273F;
-    font-weight: 800;
-}
-
-.stTabs [aria-selected="true"] {
-    color: #6F2DE2 !important;
-}
+.stApp{background:#fff}.block-container{padding-top:2rem;padding-bottom:2rem;max-width:100%}
+section[data-testid="stSidebar"]{background:linear-gradient(180deg,#26004D 0%,#5E19D6 100%)}
+section[data-testid="stSidebar"] *{color:white!important}
+.zoy-logo{font-size:42px;font-weight:950;letter-spacing:-2px;margin-bottom:-8px;color:white!important}
+.zoy-subtitle{font-size:11px;letter-spacing:4px;color:#DCCBFF!important;margin-bottom:28px;font-weight:800}
+section[data-testid="stSidebar"] .stButton>button{background:rgba(255,255,255,.10)!important;color:#fff!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:12px!important;font-weight:800!important;text-align:left!important}
+section[data-testid="stSidebar"] .stButton>button:hover{background:rgba(255,255,255,.20)!important;border:1px solid rgba(255,255,255,.28)!important}
+.sidebar-help{margin-top:34px;padding:14px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);color:#E9DDFF!important;font-size:13px}
+.page-title{font-size:36px;font-weight:950;color:#17002E;letter-spacing:-1px;margin-bottom:2px}.page-subtitle{color:#756B86;font-size:15px;margin-bottom:24px}
+.section-title{font-size:20px;font-weight:900;color:#17002E;margin-bottom:16px}.muted{color:#756B86;font-size:14px}
+.profile-card{background:#fff;border:1px solid #E9DFFF;border-radius:24px;padding:24px;box-shadow:none;margin-bottom:16px}.info-card{background:#fff;border:1px solid #E9DFFF;border-radius:18px;padding:20px;min-height:250px}
+.avatar{width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,#B98CFF,#6F2DE2);color:white;font-size:30px;font-weight:950;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.avatar img{width:86px;height:86px;object-fit:cover;border-radius:50%}.profile-name{font-size:31px;font-weight:950;color:#17002E;letter-spacing:-.8px;margin-bottom:4px}.profile-handle{color:#6F2DE2;font-weight:900;font-size:15px;margin-bottom:6px}
+.pill{display:inline-block;background:#EFE4FF;color:#6F2DE2;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:900;margin-right:6px;margin-bottom:6px}
+.field-label{color:#17002E;font-size:13px;font-weight:900;margin-bottom:2px}.field-value{color:#4F465D;font-size:14px;margin-bottom:14px}
+.stButton>button{border-radius:12px;font-weight:800;min-height:40px;border:1px solid #E9DFFF}
+div[data-testid="stTextInput"] input,div[data-testid="stTextArea"] textarea{border-radius:12px;border:1px solid #E9DFFF}
+.stTabs [data-baseweb="tab-list"]{gap:16px;border-bottom:1px solid #EFE7FF}.stTabs [data-baseweb="tab"]{color:#30273F;font-weight:800}.stTabs [aria-selected="true"]{color:#6F2DE2!important}
 </style>
 """, unsafe_allow_html=True)
 
+DEFAULT_OPPORTUNITIES = [
+    {"Creator":"", "Marca":"", "Valor":"", "Fee Zoy":"", "Status":"Lead recebido", "Data":"", "Observações":""}
+]
+DEFAULT_METRICS_HISTORY = pd.DataFrame([
+    {"Mês":"Jan","Seguidores":"","Alcance":"","Stories":"","Engajamento":""},
+    {"Mês":"Fev","Seguidores":"","Alcance":"","Stories":"","Engajamento":""},
+    {"Mês":"Mar","Seguidores":"","Alcance":"","Stories":"","Engajamento":""},
+])
+DEFAULT_PLANNING = pd.DataFrame([
+    {"Creator":"","Objetivo":"","Pilar":"","Ideia":"","Status":"Pendente","Prioridade":"Média"}
+])
 
-API_URL = "https://script.google.com/macros/s/AKfycbx9Qa_fRrUUAbRWomSoKFkwZqiLTzRlqUlvlBnxC9juMMcEmt9G_y4iKXM3okgB_3ZH/exec"
+def initials_from_name(name):
+    parts = [p for p in str(name).strip().split() if p]
+    if not parts:
+        return "CR"
+    if len(parts) == 1:
+        return parts[0][:2].upper()
+    return (parts[0][0] + parts[-1][0]).upper()
 
-def carregar_influenciadores():
-    response = requests.get(API_URL)
+def safe_value(value):
+    if value is None:
+        return ""
+    value = str(value)
+    if value.lower() in ["nan", "none"]:
+        return ""
+    return value
 
-    st.write("STATUS:", response.status_code)
-    st.write("RESPOSTA:", response.text)
-
-    if response.status_code == 200:
-        rdados = response.json()
-
-if not dados:
-    return {}
-
-creators = {}
-
-for item in dados:
-    nome = item.get("nome_completo", "Sem nome")
-
-    creators[nome] = {
-        "name": item.get("nome_completo", ""),
-        "nome_artistico": item.get("nome_artistico", ""),
-        "initials": nome[:2].upper(),
-        "handle": item.get("instagram", ""),
-        "nicho": item.get("nicho", ""),
-        "cidade": item.get("cidade", ""),
-        "status": item.get("status", "Ativo"),
-        "email": item.get("email", ""),
-        "telefone": item.get("telefone", ""),
-        "aniversario": item.get("aniversario", ""),
-        "cpf_cnpj": item.get("cpf_cnpj", ""),
-        "endereco": item.get("endereco", ""),
-        "pix": item.get("pix", ""),
-        "banco": item.get("banco", ""),
-        "agencia": item.get("agencia", ""),
-        "conta": item.get("conta", ""),
-        "foto": item.get("foto", ""),
-        "bio": item.get("bio", ""),
-        "posicionamento": item.get("posicionamento", ""),
-        "tom_voz": "",
-        "marcas_sonho": "",
-        "marcas_no_fit": "",
-        "obs": "",
-        "seguidores": "",
-        "alcance": "",
-        "impressoes": "",
-        "engajamento": ""
+def creator_from_sheet_item(item):
+    nome = safe_value(item.get("nome_completo") or item.get("nome") or "Sem nome")
+    nicho = safe_value(item.get("nicho"))
+    return {
+        "nome": nome,
+        "nome_artistico": safe_value(item.get("nome_artistico") or nome),
+        "initials": initials_from_name(nome),
+        "handle": safe_value(item.get("instagram")),
+        "nicho": nicho,
+        "cidade": safe_value(item.get("cidade")),
+        "status": safe_value(item.get("status") or "Ativo"),
+        "email": safe_value(item.get("email")),
+        "telefone": safe_value(item.get("telefone")),
+        "aniversario": safe_value(item.get("aniversario")),
+        "cpf_cnpj": safe_value(item.get("cpf_cnpj")),
+        "endereco": safe_value(item.get("endereco")),
+        "pix": safe_value(item.get("pix")),
+        "banco": safe_value(item.get("banco")),
+        "agencia": safe_value(item.get("agencia")),
+        "conta": safe_value(item.get("conta")),
+        "responsavel": safe_value(item.get("responsavel")),
+        "foto": safe_value(item.get("foto")),
+        "bio": safe_value(item.get("bio")),
+        "posicionamento": safe_value(item.get("posicionamento")),
+        "tom_voz": safe_value(item.get("tom_voz")),
+        "marcas_sonho": safe_value(item.get("marcas_sonho")),
+        "marcas_no_fit": safe_value(item.get("marcas_no_fit")),
+        "obs": safe_value(item.get("obs")),
+        "seguidores": safe_value(item.get("seguidores")),
+        "alcance": safe_value(item.get("alcance")),
+        "impressoes": safe_value(item.get("impressoes")),
+        "stories": safe_value(item.get("stories")),
+        "engajamento": safe_value(item.get("engajamento")),
+        "crescimento": safe_value(item.get("crescimento")),
+        "tags": [tag.strip() for tag in nicho.replace("•", ",").split(",") if tag.strip()],
     }
 
-return creators
+def carregar_influenciadores():
+    try:
+        response = requests.get(API_URL, timeout=15)
+        if response.status_code != 200:
+            return {}
+        dados = response.json()
+        if not isinstance(dados, list) or not dados:
+            return {}
+        creators = {}
+        for item in dados:
+            if not isinstance(item, dict):
+                continue
+            nome = safe_value(item.get("nome_completo") or item.get("nome"))
+            if nome:
+                creators[nome] = creator_from_sheet_item(item)
+        return creators
+    except Exception:
+        return {}
+
+def salvar_influenciador_sheets(dados):
+    try:
+        response = requests.post(API_URL, json=dados, timeout=15)
+        return response.status_code == 200
+    except Exception:
+        return False
+
+def refresh_creators():
+    st.session_state.creators = carregar_influenciadores()
+    names = list(st.session_state.creators.keys())
+    if names:
+        if st.session_state.selected_creator not in names:
+            st.session_state.selected_creator = names[0]
+    else:
+        st.session_state.selected_creator = None
+
+def get_creator_names():
+    return list(st.session_state.creators.keys())
+
+def render_status(status):
+    status = status or "Ativo"
+    if status == "Ativo":
+        st.success("Ativo")
+    elif status == "Pausado":
+        st.warning("Pausado")
+    else:
+        st.info(status)
+
+def field(label, value):
+    st.markdown(f'<div class="field-label">{label}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="field-value">{safe_value(value)}</div>', unsafe_allow_html=True)
+
+def image_to_data_url(uploaded_file):
+    if uploaded_file is None:
+        return ""
+    encoded = base64.b64encode(uploaded_file.getvalue()).decode()
+    return f"data:{uploaded_file.type};base64,{encoded}"
+
+def avatar_html(data):
+    foto = data.get("foto", "")
+    initials = data.get("initials", "CR")
+    if foto:
+        return f'<div class="avatar"><img src="{foto}"></div>'
+    return f'<div class="avatar">{initials}</div>'
 
 if "creators" not in st.session_state:
     st.session_state.creators = carregar_influenciadores()
-
-DEFAULT_OPPORTUNITIES = [
-    {"Creator": "Jady Carvalho", "Marca": "Adidas", "Valor": "R$ 12.000", "Fee Zoy": "R$ 2.400", "Status": "Negociação", "Data": "27/05", "Observações": "Cliente pediu proposta."},
-    {"Creator": "Malu Borges", "Marca": "C&A", "Valor": "R$ 8.000", "Fee Zoy": "R$ 1.600", "Status": "Lead recebido", "Data": "26/05", "Observações": "Mapear fit de conteúdo."},
-    {"Creator": "Vitória Guedes", "Marca": "Sallve", "Valor": "R$ 6.500", "Fee Zoy": "R$ 1.300", "Status": "Fechado", "Data": "25/05", "Observações": "Contrato em andamento."},
-]
-
-DEFAULT_METRICS_HISTORY = pd.DataFrame([
-    {"Mês": "Jan", "Seguidores": "120K", "Alcance": "38K", "Stories": "14K", "Engajamento": "3,7%"},
-    {"Mês": "Fev", "Seguidores": "124K", "Alcance": "41K", "Stories": "15K", "Engajamento": "3,9%"},
-    {"Mês": "Mar", "Seguidores": "128K", "Alcance": "44K", "Stories": "16K", "Engajamento": "4,0%"},
-    {"Mês": "Abr", "Seguidores": "132K", "Alcance": "48K", "Stories": "18K", "Engajamento": "4,2%"},
-])
-
-DEFAULT_PLANNING = pd.DataFrame([
-    {"Creator": "Jady Carvalho", "Objetivo": "Crescimento + Monetização", "Pilar": "Lifestyle / Humor", "Ideia": "Rotina real dirigindo e conversando", "Status": "Em planejamento", "Prioridade": "Alta"},
-    {"Creator": "Malu Borges", "Objetivo": "Posicionamento Fashion", "Pilar": "Moda", "Ideia": "Looks de trabalho + rotina urbana", "Status": "Pendente", "Prioridade": "Média"},
-    {"Creator": "Vitória Guedes", "Objetivo": "Autoridade em skincare", "Pilar": "Beleza", "Ideia": "Review sincero de produtos favoritos", "Status": "Aprovado", "Prioridade": "Alta"},
-])
-
 if "opportunities" not in st.session_state:
     st.session_state.opportunities = deepcopy(DEFAULT_OPPORTUNITIES)
-
 if "metrics_history" not in st.session_state:
     st.session_state.metrics_history = DEFAULT_METRICS_HISTORY.copy()
-    
 if "planning" not in st.session_state:
     st.session_state.planning = DEFAULT_PLANNING.copy()
 if "selected_creator" not in st.session_state:
-    st.session_state.selected_creator = next(iter(st.session_state.creators))
+    st.session_state.selected_creator = next(iter(st.session_state.creators), None)
 if "show_new_creator" not in st.session_state:
     st.session_state.show_new_creator = False
 if "editing_creator" not in st.session_state:
@@ -325,61 +181,11 @@ if "deleting_creator" not in st.session_state:
 if "menu" not in st.session_state:
     st.session_state.menu = "Influenciadores"
 
-
-def initials_from_name(name):
-    parts = [p for p in name.strip().split() if p]
-    if not parts:
-        return "CR"
-    if len(parts) == 1:
-        return parts[0][:2].upper()
-    return (parts[0][0] + parts[-1][0]).upper()
-
-
-def get_creator_names():
-    return list(st.session_state.creators.keys())
-
-
-def render_status(status):
-    if status == "Ativo":
-        st.success("Ativo")
-    elif status == "Pausado":
-        st.warning("Pausado")
-    else:
-        st.info(status)
-
-
-def field(label, value):
-    st.markdown(f'<div class="field-label">{label}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="field-value">{value}</div>', unsafe_allow_html=True)
-
-
-def image_to_data_url(uploaded_file):
-    if uploaded_file is None:
-        return ""
-    data = uploaded_file.getvalue()
-    encoded = base64.b64encode(data).decode()
-    return f"data:{uploaded_file.type};base64,{encoded}"
-
-
-def avatar_html(data, size="large"):
-    foto = data.get("foto", "")
-    initials = data.get("initials", "CR")
-    cls = "avatar" if size == "large" else "avatar-small"
-    if foto:
-        return f'<div class="{cls}"><img src="{foto}"></div>'
-    return f'<div class="{cls}">{initials}</div>'
-
-
-# SIDEBAR SEM TIQUES
 st.sidebar.markdown('<div class="zoy-logo">zoy</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<div class="zoy-subtitle">ASSESSORIA</div>', unsafe_allow_html=True)
 
-menu_options = ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", "Documentos"]
-
-for option in menu_options:
-    label = option
-    if st.session_state.menu == option:
-        label = "● " + option
+for option in ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", "Documentos"]:
+    label = "● " + option if st.session_state.menu == option else option
     if st.sidebar.button(label, key=f"menu_{option}", use_container_width=True):
         st.session_state.menu = option
         st.rerun()
@@ -387,38 +193,27 @@ for option in menu_options:
 menu = st.session_state.menu
 
 st.sidebar.markdown(
-    """
-    <div class="sidebar-help">
-        Sistema interno de gestão da assessoria.
-    </div>
-    """,
+    '<div class="sidebar-help">Sistema interno de gestão da assessoria.</div>',
     unsafe_allow_html=True
 )
-
 
 if menu == "Dashboard":
     st.markdown('<div class="page-title">Dashboard</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Panorama da assessoria.</div>', unsafe_allow_html=True)
-
-    open_opps = len([o for o in st.session_state.opportunities if o["Status"] not in ["Pago", "Perdido"]])
-    closed_opps = len([o for o in st.session_state.opportunities if o["Status"] == "Fechado"])
-
+    open_opps = len([o for o in st.session_state.opportunities if o.get("Status") not in ["Pago", "Perdido"]])
+    closed_opps = len([o for o in st.session_state.opportunities if o.get("Status") == "Fechado"])
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Creators ativos", len(st.session_state.creators))
     c2.metric("Oportunidades abertas", open_opps)
     c3.metric("Fechamentos do mês", closed_opps)
-    c4.metric("Reuniões da semana", 6)
-
+    c4.metric("Reuniões da semana", 0)
     ca, cb = st.columns([1.5, 1], gap="large")
     with ca:
         st.markdown("### Oportunidades recentes")
         st.dataframe(pd.DataFrame(st.session_state.opportunities), use_container_width=True, hide_index=True)
     with cb:
         st.markdown("### Alertas")
-        st.info("Jady Carvalho: reunião mensal pendente.")
-        st.info("Malu Borges: atualizar métricas do mês.")
-        st.info("Vitória Guedes: revisar marcas alvo.")
-
+        st.info("Cadastre e atualize os influenciadores pelo sistema.")
 
 elif menu == "Influenciadores":
     header_left, header_right = st.columns([5, 1.4])
@@ -459,71 +254,62 @@ elif menu == "Influenciadores":
                 if st.form_submit_button("Salvar influenciador"):
                     if not nome:
                         st.error("Preencha o nome do influenciador.")
-                    elif nome in st.session_state.creators:
-                        st.error("Já existe um influenciador com esse nome.")
                     else:
-                        st.session_state.creators[nome] = {
-                            "nome": nome,
+                        novo = {
+                            "nome_completo": nome,
                             "nome_artistico": nome_artistico or nome,
-                            "initials": initials_from_name(nome),
-                            "handle": handle,
-                            "nicho": nicho,
-                            "cidade": cidade,
-                            "status": status,
+                            "instagram": handle,
                             "email": email,
                             "telefone": telefone,
+                            "cidade": cidade,
+                            "nicho": nicho,
                             "aniversario": aniversario,
                             "cpf_cnpj": cpf_cnpj,
-                            "endereco": endereco,
                             "pix": pix,
                             "banco": banco,
                             "agencia": agencia,
                             "conta": conta,
-                            "responsavel": "",
-                            "foto": "",
                             "bio": bio,
                             "posicionamento": posicionamento,
-                            "tom_voz": tom_voz,
-                            "marcas_sonho": "",
-                            "marcas_no_fit": "",
-                            "obs": obs,
-                            "seguidores": "0",
-                            "alcance": "0",
-                            "impressoes": "0",
-                            "stories": "0",
-                            "engajamento": "0%",
-                            "crescimento": "0%",
-                            "tags": [nicho] if nicho else [],
+                            "status": status,
+                            "foto": "",
                         }
-                        st.session_state.selected_creator = nome
-                        st.session_state.show_new_creator = False
-                        st.rerun()
+                        ok = salvar_influenciador_sheets(novo)
+                        if ok:
+                            refresh_creators()
+                            st.session_state.selected_creator = nome
+                            st.session_state.show_new_creator = False
+                            st.success("Influenciador salvo.")
+                            st.rerun()
+                        else:
+                            st.error("Não consegui salvar no Google Sheets. Verifique a implantação do Apps Script.")
 
     left, right = st.columns([0.9, 3.6], gap="large")
     names = get_creator_names()
 
+    with left:
+        st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
+        query = st.text_input("Buscar influenciador", placeholder="Buscar influenciador...", label_visibility="collapsed").lower()
+        if not names:
+            st.info("Nenhum influenciador cadastrado ainda.")
+        else:
+            shown = [n for n in names if query in n.lower() or query in st.session_state.creators[n].get("handle", "").lower()]
+            for name in shown:
+                data = st.session_state.creators[name]
+                prefix = "• " if name == st.session_state.selected_creator else ""
+                if st.button(f"{prefix}{name}", key=f"select_{name}", use_container_width=True):
+                    st.session_state.selected_creator = name
+                    st.rerun()
+                st.caption(data.get("handle", ""))
+            st.caption(f"{len(st.session_state.creators)} influenciadores cadastrados")
+
     if not names:
-        st.warning("Nenhum influenciador cadastrado.")
+        with right:
+            st.warning("Cadastre o primeiro influenciador usando o botão '+ Novo influenciador'.")
         st.stop()
 
     if st.session_state.selected_creator not in names:
         st.session_state.selected_creator = names[0]
-
-    with left:
-        st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
-        query = st.text_input("Buscar influenciador", placeholder="Buscar influenciador...", label_visibility="collapsed").lower()
-        shown = [n for n in names if query in n.lower() or query in st.session_state.creators[n].get("handle", "").lower()]
-
-        for name in shown:
-            data = st.session_state.creators[name]
-            is_selected = name == st.session_state.selected_creator
-            prefix = "• " if is_selected else ""
-            if st.button(f"{prefix}{name}", key=f"select_{name}", use_container_width=True):
-                st.session_state.selected_creator = name
-                st.rerun()
-            st.caption(data.get("handle", ""))
-
-        st.caption(f"{len(st.session_state.creators)} influenciadores cadastrados")
 
     selected = st.session_state.selected_creator
     creator = st.session_state.creators[selected]
@@ -532,7 +318,7 @@ elif menu == "Influenciadores":
         st.markdown('<div class="profile-card">', unsafe_allow_html=True)
         h1, h2, h3 = st.columns([0.7, 3.2, 1.1])
         with h1:
-            st.markdown(avatar_html(creator, "large"), unsafe_allow_html=True)
+            st.markdown(avatar_html(creator), unsafe_allow_html=True)
         with h2:
             st.markdown(f'<div class="profile-name">{selected}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="profile-handle">{creator.get("handle", "")}</div>', unsafe_allow_html=True)
@@ -557,22 +343,14 @@ elif menu == "Influenciadores":
                 st.rerun()
 
         if st.session_state.deleting_creator == selected:
-            st.error(f"Tem certeza que deseja excluir {selected}?")
-            d1, d2, d3 = st.columns([1, 1, 4])
-            with d1:
-                if st.button("Sim, excluir", use_container_width=True):
-                    del st.session_state.creators[selected]
-                    st.session_state.deleting_creator = None
-                    if st.session_state.creators:
-                        st.session_state.selected_creator = next(iter(st.session_state.creators))
-                    st.rerun()
-            with d2:
-                if st.button("Cancelar", use_container_width=True):
-                    st.session_state.deleting_creator = None
-                    st.rerun()
+            st.error("Por enquanto, a exclusão permanente deve ser feita direto no Google Sheets.")
+            if st.button("Cancelar exclusão", use_container_width=True):
+                st.session_state.deleting_creator = None
+                st.rerun()
 
         if st.session_state.editing_creator == selected:
             with st.expander("Editar dados do influenciador", expanded=True):
+                st.info("Por enquanto, a edição permanente deve ser feita direto no Google Sheets. Nesta tela a edição fica apenas na sessão atual.")
                 with st.form("form_edit_creator"):
                     col1, col2, col3 = st.columns(3)
                     with col1:
@@ -596,7 +374,6 @@ elif menu == "Influenciadores":
                         eag = st.text_input("Agência", value=creator.get("agencia", ""))
                         econta = st.text_input("Conta", value=creator.get("conta", ""))
                         eend = st.text_input("Endereço", value=creator.get("endereco", ""))
-
                     ebio = st.text_area("Bio estratégica", value=creator.get("bio", ""))
                     epos = st.text_area("Posicionamento", value=creator.get("posicionamento", ""))
                     etom = st.text_area("Tom de voz", value=creator.get("tom_voz", ""))
@@ -607,50 +384,21 @@ elif menu == "Influenciadores":
                     s1, s2 = st.columns([1, 1])
                     save = s1.form_submit_button("Salvar alterações")
                     cancel = s2.form_submit_button("Cancelar")
-
                     if save:
-                        updated = {
-                            **creator,
-                            "nome": enome,
-                            "nome_artistico": enomeart,
-                            "initials": initials_from_name(enome),
-                            "handle": ehandle,
-                            "email": eemail,
-                            "telefone": etel,
-                            "cidade": ecid,
-                            "nicho": enicho,
-                            "aniversario": eani,
-                            "cpf_cnpj": ecpf,
-                            "status": estatus,
-                            "pix": epix,
-                            "banco": ebanco,
-                            "agencia": eag,
-                            "conta": econta,
-                            "endereco": eend,
-                            "bio": ebio,
-                            "posicionamento": epos,
-                            "tom_voz": etom,
-                            "marcas_sonho": ems,
-                            "marcas_no_fit": enf,
-                            "obs": eobs,
-                        }
-
+                        updated = {**creator, "nome": enome, "nome_artistico": enomeart, "initials": initials_from_name(enome), "handle": ehandle, "email": eemail, "telefone": etel, "cidade": ecid, "nicho": enicho, "aniversario": eani, "cpf_cnpj": ecpf, "status": estatus, "pix": epix, "banco": ebanco, "agencia": eag, "conta": econta, "endereco": eend, "bio": ebio, "posicionamento": epos, "tom_voz": etom, "marcas_sonho": ems, "marcas_no_fit": enf, "obs": eobs}
                         if enome != selected:
                             del st.session_state.creators[selected]
                             st.session_state.creators[enome] = updated
                             st.session_state.selected_creator = enome
                         else:
                             st.session_state.creators[selected] = updated
-
                         st.session_state.editing_creator = None
                         st.rerun()
-
                     if cancel:
                         st.session_state.editing_creator = None
                         st.rerun()
 
         tabs = st.tabs(["Dados gerais", "Posicionamento", "Métricas", "Histórico", "Arquivos"])
-
         with tabs[0]:
             ca, cb, cc = st.columns(3)
             with ca:
@@ -712,14 +460,16 @@ elif menu == "Influenciadores":
             st.file_uploader("Comprovante bancário", type=["pdf", "jpg", "png"])
             st.file_uploader("Notas fiscais", type=["pdf", "xml"])
 
-
 elif menu == "Planejamento":
     st.markdown('<div class="page-title">Planejamento</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Gestão estratégica mensal dos creators assessorados.</div>', unsafe_allow_html=True)
-
+    names = get_creator_names()
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.selectbox("Influenciador", get_creator_names())
+        if names:
+            st.selectbox("Influenciador", names)
+        else:
+            st.info("Cadastre influenciadores para planejar.")
         st.selectbox("Objetivo do mês", ["Crescimento", "Monetização", "Posicionamento", "Autoridade", "Relacionamento com marcas", "Awareness"])
         st.multiselect("Pilares editoriais", ["Lifestyle", "Beleza", "Skincare", "Humor", "Moda", "Viagem", "Fitness", "Gastronomia"], default=["Lifestyle"])
         st.checkbox("Reunião realizada")
@@ -736,16 +486,19 @@ elif menu == "Planejamento":
     st.markdown("### Planejamentos em andamento")
     st.dataframe(st.session_state.planning, use_container_width=True, hide_index=True)
 
-
 elif menu == "Oportunidades":
     st.markdown('<div class="page-title">Oportunidades</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Pipeline comercial da assessoria por creator.</div>', unsafe_allow_html=True)
-
+    names = get_creator_names()
     with st.expander("+ Nova oportunidade"):
         with st.form("new_opportunity"):
             c1, c2, c3 = st.columns(3)
             with c1:
-                op_creator = st.selectbox("Creator", get_creator_names())
+                if names:
+                    op_creator = st.selectbox("Creator", names)
+                else:
+                    op_creator = ""
+                    st.info("Cadastre influenciadores primeiro.")
                 op_marca = st.text_input("Marca")
                 op_status = st.selectbox("Status", ["Lead recebido", "Abordagem", "Negociação", "Contrato", "Fechado", "Perdido", "Pago"])
             with c2:
@@ -755,39 +508,36 @@ elif menu == "Oportunidades":
             with c3:
                 op_obs = st.text_area("Observações")
             if st.form_submit_button("Salvar oportunidade"):
-                st.session_state.opportunities.append({
-                    "Creator": op_creator,
-                    "Marca": op_marca,
-                    "Valor": op_valor,
-                    "Fee Zoy": op_fee,
-                    "Status": op_status,
-                    "Data": op_data,
-                    "Observações": op_obs,
-                })
-                st.rerun()
-
+                if op_creator:
+                    st.session_state.opportunities.append({"Creator": op_creator, "Marca": op_marca, "Valor": op_valor, "Fee Zoy": op_fee, "Status": op_status, "Data": op_data, "Observações": op_obs})
+                    st.rerun()
+                else:
+                    st.error("Cadastre pelo menos um influenciador antes.")
     statuses = ["Lead recebido", "Abordagem", "Negociação", "Contrato", "Fechado", "Pago"]
     cols = st.columns(len(statuses))
     for col, status in zip(cols, statuses):
         with col:
             st.markdown(f"### {status}")
-            filtered = [o for o in st.session_state.opportunities if o["Status"] == status]
+            filtered = [o for o in st.session_state.opportunities if o.get("Status") == status]
             if not filtered:
                 st.caption("Sem oportunidades")
             for opp in filtered:
-                st.markdown(f"**{opp['Marca']}**")
-                st.caption(opp["Creator"])
-                st.write(opp["Valor"])
-                st.caption(f"Fee Zoy: {opp['Fee Zoy']}")
+                st.markdown(f"**{opp.get('Marca','')}**")
+                st.caption(opp.get("Creator", ""))
+                st.write(opp.get("Valor", ""))
+                st.caption(f"Fee Zoy: {opp.get('Fee Zoy', '')}")
                 st.markdown("---")
     st.markdown("### Base completa")
     st.dataframe(pd.DataFrame(st.session_state.opportunities), use_container_width=True, hide_index=True)
 
-
 elif menu == "Documentos":
     st.markdown('<div class="page-title">Documentos</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subtitle">Central de arquivos dos influenciadores.</div>', unsafe_allow_html=True)
-    st.selectbox("Influenciador", get_creator_names())
+    names = get_creator_names()
+    if names:
+        st.selectbox("Influenciador", names)
+    else:
+        st.info("Cadastre influenciadores primeiro.")
     st.markdown("### Uploads")
     st.file_uploader("Mídia kit", type=["pdf", "pptx", "docx"])
     st.file_uploader("Contrato", type=["pdf", "docx"])
