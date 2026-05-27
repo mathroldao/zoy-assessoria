@@ -8,6 +8,38 @@ import streamlit as st
 
 st.set_page_config(page_title="Zoy Assessoria", page_icon="💜", layout="wide")
 
+st.markdown("""
+<style>
+
+/* REMOVE HEADER PADRÃO DO STREAMLIT */
+header {
+    visibility: hidden;
+    height: 0px;
+}
+
+/* REMOVE BARRA SUPERIOR */
+[data-testid="stHeader"] {
+    display: none;
+}
+
+/* REMOVE MENU SUPERIOR */
+#MainMenu {
+    visibility: hidden;
+}
+
+/* REMOVE FOOTER */
+footer {
+    visibility: hidden;
+}
+
+/* AJUSTA ESPAÇAMENTO DO TOPO */
+.block-container {
+    padding-top: 2rem;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 API_URL = "https://script.google.com/macros/s/AKfycbx9Qa_fRrUUAbRWomSoKFkwZqiLTzRlqUlvlBnxC9juMMcEmt9G_y4iKXM3okgB_3ZH/exec"
 
 st.markdown("""
