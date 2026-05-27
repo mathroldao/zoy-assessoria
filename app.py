@@ -7,14 +7,6 @@ st.set_page_config(page_title="Zoy Assessoria", page_icon="💜", layout="wide")
 
 st.markdown("""
 <style>
-:root {
-    --zoy-purple: #4B12B8;
-    --zoy-dark: #17002E;
-    --zoy-soft: #F7F2FF;
-    --zoy-border: #E7D9FF;
-    --zoy-muted: #756B86;
-}
-
 .stApp {
     background: #FFFFFF;
 }
@@ -25,67 +17,50 @@ st.markdown("""
     max-width: 100%;
 }
 
-/* SIDEBAR */
+/* SIDEBAR ROXA */
 section[data-testid="stSidebar"] {
-    background: #FBFAFD;
-    border-right: 1px solid #EFE7FF;
+    background: linear-gradient(180deg, #26004D 0%, #5E19D6 100%);
 }
 
 section[data-testid="stSidebar"] * {
-    color: #17002E !important;
+    color: white !important;
 }
 
 .zoy-logo {
     font-size: 42px;
     font-weight: 950;
     letter-spacing: -2px;
-    color: #17002E;
     margin-bottom: -8px;
 }
 
 .zoy-subtitle {
     font-size: 11px;
     letter-spacing: 4px;
-    color: #6F2DE2;
-    margin-bottom: 26px;
+    color: #DCCBFF !important;
+    margin-bottom: 28px;
     font-weight: 800;
-}
-
-.menu-card {
-    border-radius: 14px;
-    padding: 12px 14px;
-    margin-bottom: 8px;
-    border: 1px solid transparent;
-    font-weight: 800;
-    font-size: 14px;
-}
-
-.menu-card-active {
-    background: #F0E7FF;
-    border: 1px solid #DCCBFF;
-    color: #4B12B8 !important;
 }
 
 .sidebar-user {
-    margin-top: 40px;
+    margin-top: 36px;
     padding: 16px;
     border-radius: 18px;
-    background: #FFFFFF;
-    border: 1px solid #E7D9FF;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.18);
 }
 
 .sidebar-user-name {
     font-weight: 900;
-    color: #17002E;
+    color: white;
 }
 
 .sidebar-user-role {
-    color: #756B86;
+    color: #E9DDFF !important;
     font-size: 13px;
     margin-top: 4px;
 }
 
-/* TITLES */
+/* TÍTULOS */
 .page-title {
     font-size: 36px;
     font-weight: 950;
@@ -113,56 +88,56 @@ section[data-testid="stSidebar"] * {
 }
 
 /* CARDS */
-.z-card {
+.clean-card {
     background: #FFFFFF;
-    border: 1px solid #E7D9FF;
-    border-radius: 22px;
-    padding: 22px;
-    box-shadow: 0 14px 40px rgba(75, 18, 184, 0.04);
+    border: 1px solid #E9DFFF;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: none;
     margin-bottom: 16px;
 }
 
 .profile-card {
     background: #FFFFFF;
-    border: 1px solid #E7D9FF;
-    border-radius: 26px;
+    border: 1px solid #E9DFFF;
+    border-radius: 24px;
     padding: 24px;
-    box-shadow: 0 14px 40px rgba(75, 18, 184, 0.04);
-    margin-bottom: 18px;
+    box-shadow: none;
+    margin-bottom: 16px;
 }
 
 .info-card {
     background: #FFFFFF;
-    border: 1px solid #E7D9FF;
-    border-radius: 20px;
+    border: 1px solid #E9DFFF;
+    border-radius: 18px;
     padding: 20px;
-    min-height: 210px;
+    min-height: 250px;
 }
 
-.creator-card {
+.creator-list-item {
     background: #FFFFFF;
     border: 1px solid #EFE7FF;
-    border-radius: 18px;
+    border-radius: 16px;
     padding: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
-.creator-card-active {
+.creator-list-item-active {
     background: #F7F2FF;
     border: 1px solid #D7C4FF;
-    border-radius: 18px;
+    border-radius: 16px;
     padding: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 /* AVATARS */
 .avatar {
-    width: 82px;
-    height: 82px;
+    width: 78px;
+    height: 78px;
     border-radius: 50%;
     background: linear-gradient(135deg, #B98CFF, #6F2DE2);
     color: white;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 950;
     display: flex;
     align-items: center;
@@ -170,8 +145,8 @@ section[data-testid="stSidebar"] * {
 }
 
 .avatar-small {
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: linear-gradient(135deg, #B98CFF, #6F2DE2);
     color: white;
@@ -185,7 +160,7 @@ section[data-testid="stSidebar"] * {
 }
 
 .profile-name {
-    font-size: 32px;
+    font-size: 31px;
     font-weight: 950;
     color: #17002E;
     letter-spacing: -0.8px;
@@ -197,24 +172,6 @@ section[data-testid="stSidebar"] * {
     font-weight: 900;
     font-size: 15px;
     margin-bottom: 6px;
-}
-
-.status-pill {
-    display: inline-block;
-    border-radius: 999px;
-    padding: 7px 12px;
-    font-size: 12px;
-    font-weight: 900;
-}
-
-.status-active {
-    background: #E8F8ED;
-    color: #148A42;
-}
-
-.status-paused {
-    background: #FFF3D8;
-    color: #B96A00;
 }
 
 .pill {
@@ -242,18 +199,18 @@ section[data-testid="stSidebar"] * {
     margin-bottom: 14px;
 }
 
-/* BUTTONS */
+/* BOTÕES */
 .stButton > button {
     border-radius: 12px;
     font-weight: 800;
     min-height: 40px;
-    border: 1px solid #E7D9FF;
+    border: 1px solid #E9DFFF;
 }
 
 div[data-testid="stTextInput"] input,
 div[data-testid="stTextArea"] textarea {
     border-radius: 12px;
-    border: 1px solid #E7D9FF;
+    border: 1px solid #E9DFFF;
 }
 
 .stTabs [data-baseweb="tab-list"] {
@@ -408,6 +365,8 @@ if "editing_creator" not in st.session_state:
     st.session_state.editing_creator = None
 if "deleting_creator" not in st.session_state:
     st.session_state.deleting_creator = None
+if "menu" not in st.session_state:
+    st.session_state.menu = "Influenciadores"
 
 
 def initials_from_name(name):
@@ -437,12 +396,21 @@ def field(label, value):
     st.markdown(f'<div class="field-value">{value}</div>', unsafe_allow_html=True)
 
 
-# SIDEBAR
+# SIDEBAR SEM TIQUES
 st.sidebar.markdown('<div class="zoy-logo">zoy</div>', unsafe_allow_html=True)
 st.sidebar.markdown('<div class="zoy-subtitle">ASSESSORIA</div>', unsafe_allow_html=True)
 
 menu_options = ["Dashboard", "Influenciadores", "Planejamento", "Oportunidades", "Documentos"]
-menu = st.sidebar.radio("Menu", menu_options, label_visibility="collapsed")
+
+for option in menu_options:
+    label = option
+    if st.session_state.menu == option:
+        label = "● " + option
+    if st.sidebar.button(label, key=f"menu_{option}", use_container_width=True):
+        st.session_state.menu = option
+        st.rerun()
+
+menu = st.session_state.menu
 
 st.sidebar.markdown(
     """
@@ -574,18 +542,15 @@ elif menu == "Influenciadores":
 
         for name in shown:
             data = st.session_state.creators[name]
-            is_selected = name == st.session_state.selected_creator
-            card_class = "creator-card-active" if is_selected else "creator-card"
-            status_text = data.get("status", "Ativo")
-            status_badge = "Ativo" if status_text == "Ativo" else status_text
-
-            st.markdown(f'<div class="{card_class}">', unsafe_allow_html=True)
+            active_class = "creator-list-item-active" if name == st.session_state.selected_creator else "creator-list-item"
+            st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
             c_avatar, c_info = st.columns([1, 5])
             with c_avatar:
                 st.markdown(f'<div class="avatar-small">{data.get("initials", "CR")}</div>', unsafe_allow_html=True)
             with c_info:
                 st.markdown(f"**{name}**")
-                st.caption(f"{data.get('handle', '')} • {status_badge}")
+                st.caption(f"{data.get('handle', '')} • {data.get('nicho', '')}")
+                st.caption(data.get("status", "Ativo"))
             if st.button("Selecionar", key=f"select_{name}", use_container_width=True):
                 st.session_state.selected_creator = name
                 st.rerun()
@@ -725,34 +690,27 @@ elif menu == "Influenciadores":
         with tabs[0]:
             ca, cb, cc = st.columns(3)
             with ca:
-                st.markdown('<div class="info-card">', unsafe_allow_html=True)
                 st.markdown("### Contato")
                 field("Nome completo", creator.get("nome", ""))
                 field("Nome artístico", creator.get("nome_artistico", ""))
                 field("Instagram", creator.get("handle", ""))
                 field("E-mail", creator.get("email", ""))
                 field("Telefone", creator.get("telefone", ""))
-                st.markdown("</div>", unsafe_allow_html=True)
             with cb:
-                st.markdown('<div class="info-card">', unsafe_allow_html=True)
                 st.markdown("### Dados pessoais")
                 field("Cidade", creator.get("cidade", ""))
                 field("Endereço", creator.get("endereco", ""))
                 field("Aniversário", creator.get("aniversario", ""))
                 field("CPF/CNPJ", creator.get("cpf_cnpj", ""))
                 field("Responsável", creator.get("responsavel", "Jean"))
-                st.markdown("</div>", unsafe_allow_html=True)
             with cc:
-                st.markdown('<div class="info-card">', unsafe_allow_html=True)
                 st.markdown("### Dados bancários")
                 field("Pix", creator.get("pix", ""))
                 field("Banco", creator.get("banco", ""))
                 field("Agência", creator.get("agencia", ""))
                 field("Conta", creator.get("conta", ""))
-                st.markdown("</div>", unsafe_allow_html=True)
 
         with tabs[1]:
-            st.markdown('<div class="z-card">', unsafe_allow_html=True)
             st.markdown("### Posicionamento")
             field("Nicho", creator.get("nicho", ""))
             field("Bio estratégica", creator.get("bio", ""))
@@ -763,7 +721,6 @@ elif menu == "Influenciadores":
             field("Observações internas", creator.get("obs", ""))
             tags_html = "".join([f'<span class="pill">{t}</span>' for t in creator.get("tags", [])])
             st.markdown(tags_html, unsafe_allow_html=True)
-            st.markdown("</div>", unsafe_allow_html=True)
 
         with tabs[2]:
             st.markdown("### Métricas principais")
@@ -778,23 +735,19 @@ elif menu == "Influenciadores":
             st.dataframe(st.session_state.metrics_history, use_container_width=True, hide_index=True)
 
         with tabs[3]:
-            st.markdown('<div class="z-card">', unsafe_allow_html=True)
             st.markdown("### Histórico")
             st.write("18/05 — Reunião mensal realizada")
             st.write("15/05 — Proposta enviada para marca")
             st.write("10/05 — Ajuste de posicionamento aprovado")
             st.write("02/05 — Atualização de métricas realizada")
-            st.markdown("</div>", unsafe_allow_html=True)
 
         with tabs[4]:
-            st.markdown('<div class="z-card">', unsafe_allow_html=True)
             st.markdown("### Arquivos")
             st.file_uploader("Mídia kit", type=["pdf", "pptx", "docx"])
             st.file_uploader("Contrato", type=["pdf", "docx"])
             st.file_uploader("Documentos pessoais", type=["pdf", "jpg", "png"])
             st.file_uploader("Comprovante bancário", type=["pdf", "jpg", "png"])
             st.file_uploader("Notas fiscais", type=["pdf", "xml"])
-            st.markdown("</div>", unsafe_allow_html=True)
 
 
 elif menu == "Planejamento":
