@@ -12,24 +12,127 @@ API_URL = "https://script.google.com/macros/s/AKfycbx9Qa_fRrUUAbRWomSoKFkwZqiLTz
 
 st.markdown("""
 <style>
-.stApp{background:#fff}.block-container{padding-top:2rem;padding-bottom:2rem;max-width:100%}
-section[data-testid="stSidebar"]{background:linear-gradient(180deg,#26004D 0%,#5E19D6 100%)}
-section[data-testid="stSidebar"] *{color:white!important}
-.zoy-logo{font-size:42px;font-weight:950;letter-spacing:-2px;margin-bottom:-8px;color:white!important}
-.zoy-subtitle{font-size:11px;letter-spacing:4px;color:#DCCBFF!important;margin-bottom:28px;font-weight:800}
-section[data-testid="stSidebar"] .stButton>button{background:rgba(255,255,255,.10)!important;color:#fff!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:12px!important;font-weight:800!important;text-align:left!important}
-section[data-testid="stSidebar"] .stButton>button:hover{background:rgba(255,255,255,.20)!important;border:1px solid rgba(255,255,255,.28)!important}
-.sidebar-help{margin-top:34px;padding:14px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);color:#E9DDFF!important;font-size:13px}
-.page-title{font-size:36px;font-weight:950;color:#17002E;letter-spacing:-1px;margin-bottom:2px}.page-subtitle{color:#756B86;font-size:15px;margin-bottom:24px}
-.section-title{font-size:20px;font-weight:900;color:#17002E;margin-bottom:16px}.muted{color:#756B86;font-size:14px}
-.profile-card{background:#fff;border:1px solid #E9DFFF;border-radius:24px;padding:24px;box-shadow:none;margin-bottom:16px}.info-card{background:#fff;border:1px solid #E9DFFF;border-radius:18px;padding:20px;min-height:250px}
-.avatar{width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,#B98CFF,#6F2DE2);color:white;font-size:30px;font-weight:950;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.avatar img{width:86px;height:86px;object-fit:cover;border-radius:50%}.profile-name{font-size:31px;font-weight:950;color:#17002E;letter-spacing:-.8px;margin-bottom:4px}.profile-handle{color:#6F2DE2;font-weight:900;font-size:15px;margin-bottom:6px}
-.pill{display:inline-block;background:#EFE4FF;color:#6F2DE2;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:900;margin-right:6px;margin-bottom:6px}
-.field-label{color:#17002E;font-size:13px;font-weight:900;margin-bottom:2px}.field-value{color:#4F465D;font-size:14px;margin-bottom:14px}
-.stButton>button{border-radius:12px;font-weight:800;min-height:40px;border:1px solid #E9DFFF}
-div[data-testid="stTextInput"] input,div[data-testid="stTextArea"] textarea{border-radius:12px;border:1px solid #E9DFFF}
-.stTabs [data-baseweb="tab-list"]{gap:16px;border-bottom:1px solid #EFE7FF}.stTabs [data-baseweb="tab"]{color:#30273F;font-weight:800}.stTabs [aria-selected="true"]{color:#6F2DE2!important}
+.stApp{
+    background:#FFFFFF;
+}
+
+.block-container{
+    padding-top:1.8rem;
+    padding-bottom:2rem;
+    max-width:100%;
+}
+
+section[data-testid="stSidebar"]{
+    background:linear-gradient(180deg,#1F003D 0%, #4D14B8 100%);
+    border-right:1px solid rgba(255,255,255,0.08);
+}
+
+section[data-testid="stSidebar"] *{
+    color:white!important;
+}
+
+.zoy-logo{
+    font-size:42px;
+    font-weight:950;
+    letter-spacing:-2px;
+    margin-bottom:-8px;
+}
+
+.zoy-subtitle{
+    font-size:11px;
+    letter-spacing:4px;
+    color:#D8C8FF!important;
+    margin-bottom:34px;
+    font-weight:800;
+}
+
+section[data-testid="stSidebar"] .stButton > button{
+    width:100%;
+    background:transparent!important;
+    border:none!important;
+    border-radius:14px!important;
+    min-height:46px!important;
+    text-align:left!important;
+    font-weight:700!important;
+    font-size:14px!important;
+    color:rgba(255,255,255,0.78)!important;
+    transition:all .2s ease;
+    box-shadow:none!important;
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover{
+    background:rgba(255,255,255,0.08)!important;
+    color:#FFFFFF!important;
+    transform:translateX(2px);
+}
+
+.page-title{
+    font-size:40px;
+    font-weight:950;
+    color:#17002E;
+    letter-spacing:-1.5px;
+    margin-bottom:2px;
+}
+
+.page-subtitle{
+    color:#7A718A;
+    font-size:14px;
+    margin-bottom:28px;
+}
+
+.profile-card{
+    background:#FFFFFF;
+    border:none;
+    border-radius:24px;
+    padding:8px 0 24px 0;
+    box-shadow:none;
+}
+
+.info-card{
+    background:#FFFFFF;
+    border:1px solid #F1EAFE;
+    border-radius:20px;
+    padding:22px;
+}
+
+.stButton > button{
+    border-radius:14px!important;
+    border:1px solid #EEE6FF!important;
+    min-height:42px!important;
+    font-weight:700!important;
+    box-shadow:none!important;
+}
+
+.stButton > button:hover{
+    border:1px solid #D8C8FF!important;
+}
+
+div[data-testid="stTextInput"] input,
+div[data-testid="stTextArea"] textarea{
+    border-radius:14px!important;
+    border:1px solid #EEE6FF!important;
+    background:#FFFFFF!important;
+}
+
+.stTabs [data-baseweb="tab-list"]{
+    gap:20px;
+    border-bottom:1px solid #F3EDFF;
+}
+
+.stTabs [data-baseweb="tab"]{
+    color:#5B516A;
+    font-weight:700;
+    padding-left:0;
+    padding-right:0;
+}
+
+.stTabs [aria-selected="true"]{
+    color:#6F2DE2!important;
+}
+
+hr{
+    display:none;
+}
 </style>
 """, unsafe_allow_html=True)
 
