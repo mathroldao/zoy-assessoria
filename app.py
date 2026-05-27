@@ -290,13 +290,83 @@ elif menu == "Influenciadores":
     with left:
         st.markdown('<div class="section-title">Influenciadores</div>', unsafe_allow_html=True)
         st.text_input("Buscar influenciador", placeholder="Buscar influenciador...", label_visibility="collapsed")
-        selected_creator = st.radio("Influenciadores", creator_names, label_visibility="collapsed")
-        for name, data in st.session_state.creators.items():
-            creator_card(name, data, selected_creator)
-        st.markdown(
-            f'<div class="muted" style="margin-top:22px;">{len(st.session_state.creators)} influenciadores cadastrados</div>',
-            unsafe_allow_html=True
-        )
+        selected_creator = st.session_state.get("selected_creator", names[0])
+
+for name, data in st.session_state.creators.items():
+    is_selected = selected_creator == name
+
+    card_bg = "#F5F0FF" if is_selected else "#FFFFFF"
+    border = "#D9C8FF" if is_selected else "#EAEAEA"
+
+    with st.container():
+        c1, c2, c3 = st.columns([1, 5, 2])
+
+        with c1:
+            st.markdown(
+                f"""
+                <div style="
+                    width:48px;
+                    height:48px;
+                    border-radius:50%;
+                    background:linear-gradient(135deg,#B98CFF,#6D28D9);
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    color:white;
+                    font-weight:700;
+                    margin-top:10px;
+                ">
+                    {data.get("initials","CR")}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with c2:
+            st.markdown(
+                f"""
+                <div style="padding-top:12px;">
+                    <div style="font-weight:700;font-size:16px;">
+                        {name}
+                    </div>
+                    <div style="color:#777;font-size:14px;">
+                        {data.get("handle","")}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with c3:
+            if data.get("status") == "Ativo":
+                st.success("Ativo")
+            else:
+                st.warning(data.get("status","Pausado"))
+
+        if st.button(
+            f"Selecionar {name}",
+            key=f"select_{name}",
+            use_container_width=True
+        ):
+            st.session_state.selected_creator = name
+            st.rerun()
+
+        st.markdown("<div style='margin-bottom:12px;'></div>", unsafe_allow_html=True)
+
+selected_creator = st.session_state.selected_creator
+
+st.markdown(
+    f"""
+    <div style="
+        color:#777;
+        margin-top:18px;
+        font-size:14px;
+    ">
+        {len(st.session_state.creators)} influenciadores cadastrados
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
     creator = st.session_state.creators[selected_creator]
 
