@@ -242,7 +242,47 @@ def carregar_influenciadores():
     st.write("RESPOSTA:", response.text)
 
     if response.status_code == 200:
-        return response.json()
+        rdados = response.json()
+
+if not dados:
+    return {}
+
+creators = {}
+
+for item in dados:
+    nome = item.get("nome_completo", "Sem nome")
+
+    creators[nome] = {
+        "name": item.get("nome_completo", ""),
+        "nome_artistico": item.get("nome_artistico", ""),
+        "initials": nome[:2].upper(),
+        "handle": item.get("instagram", ""),
+        "nicho": item.get("nicho", ""),
+        "cidade": item.get("cidade", ""),
+        "status": item.get("status", "Ativo"),
+        "email": item.get("email", ""),
+        "telefone": item.get("telefone", ""),
+        "aniversario": item.get("aniversario", ""),
+        "cpf_cnpj": item.get("cpf_cnpj", ""),
+        "endereco": item.get("endereco", ""),
+        "pix": item.get("pix", ""),
+        "banco": item.get("banco", ""),
+        "agencia": item.get("agencia", ""),
+        "conta": item.get("conta", ""),
+        "foto": item.get("foto", ""),
+        "bio": item.get("bio", ""),
+        "posicionamento": item.get("posicionamento", ""),
+        "tom_voz": "",
+        "marcas_sonho": "",
+        "marcas_no_fit": "",
+        "obs": "",
+        "seguidores": "",
+        "alcance": "",
+        "impressoes": "",
+        "engajamento": ""
+    }
+
+return creators
 
     return {}
 
