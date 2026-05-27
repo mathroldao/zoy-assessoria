@@ -293,11 +293,6 @@ elif menu == "Influenciadores":
         selected_creator = st.session_state.get("selected_creator", names[0])
 
 for name, data in st.session_state.creators.items():
-    is_selected = selected_creator == name
-
-    card_bg = "#F5F0FF" if is_selected else "#FFFFFF"
-    border = "#D9C8FF" if is_selected else "#EAEAEA"
-
     with st.container():
         c1, c2, c3 = st.columns([1, 5, 2])
 
@@ -341,7 +336,7 @@ for name, data in st.session_state.creators.items():
             if data.get("status") == "Ativo":
                 st.success("Ativo")
             else:
-                st.warning(data.get("status","Pausado"))
+                st.warning(data.get("status", "Pausado"))
 
         if st.button(
             f"Selecionar {name}",
@@ -354,14 +349,11 @@ for name, data in st.session_state.creators.items():
         st.markdown("<div style='margin-bottom:12px;'></div>", unsafe_allow_html=True)
 
 selected_creator = st.session_state.selected_creator
+creator = st.session_state.creators[selected_creator]
 
 st.markdown(
     f"""
-    <div style="
-        color:#777;
-        margin-top:18px;
-        font-size:14px;
-    ">
+    <div style="color:#777; margin-top:18px; font-size:14px;">
         {len(st.session_state.creators)} influenciadores cadastrados
     </div>
     """,
