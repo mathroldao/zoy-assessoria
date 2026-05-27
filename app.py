@@ -285,7 +285,6 @@ def carregar_influenciadores():
 
 if "creators" not in st.session_state:
     st.session_state.creators = carregar_influenciadores()
-}
 
 DEFAULT_OPPORTUNITIES = [
     {"Creator": "Jady Carvalho", "Marca": "Adidas", "Valor": "R$ 12.000", "Fee Zoy": "R$ 2.400", "Status": "Negociação", "Data": "27/05", "Observações": "Cliente pediu proposta."},
@@ -306,13 +305,12 @@ DEFAULT_PLANNING = pd.DataFrame([
     {"Creator": "Vitória Guedes", "Objetivo": "Autoridade em skincare", "Pilar": "Beleza", "Ideia": "Review sincero de produtos favoritos", "Status": "Aprovado", "Prioridade": "Alta"},
 ])
 
-
-if "creators" not in st.session_state:
-    st.session_state.creators = deepcopy(DEFAULT_CREATORS)
 if "opportunities" not in st.session_state:
     st.session_state.opportunities = deepcopy(DEFAULT_OPPORTUNITIES)
+
 if "metrics_history" not in st.session_state:
     st.session_state.metrics_history = DEFAULT_METRICS_HISTORY.copy()
+    
 if "planning" not in st.session_state:
     st.session_state.planning = DEFAULT_PLANNING.copy()
 if "selected_creator" not in st.session_state:
