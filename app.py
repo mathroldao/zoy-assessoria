@@ -131,7 +131,17 @@ elif menu == "Influenciadores":
         with pc1:
             st.markdown(f'''<div class="profile-card"><div style="display:flex;align-items:center;gap:22px;"><div class="avatar">{creator.get("initials","CR")}</div><div><div class="profile-name">{selected_creator}</div><div class="profile-handle">{creator.get("handle","")}</div><div class="muted">{creator.get("nicho","")}</div><div class="muted" style="margin-top:8px;">📍 {creator.get("cidade","")}</div></div></div></div>''', unsafe_allow_html=True)
         with pc2:
-            st.markdown("**Responsável**"); st.write(creator.get("responsavel","Jean")); st.markdown("**Status**"); st.success(creator.get("status","Ativo")) if creator.get("status")=="Ativo" else st.warning(creator.get("status","Pausado"))
+            st.markdown("**Responsável**")
+st.write(creator.get("responsavel", "Jean"))
+
+st.markdown("**Status**")
+
+if creator.get("status") == "Ativo":
+    st.success("Ativo")
+elif creator.get("status") == "Pausado":
+    st.warning("Pausado")
+else:
+    st.info(creator.get("status", "Ativo"))
         ac1,ac2,ac3=st.columns([1,1,4])
         with ac1:
             if st.button("Editar dados", use_container_width=True): st.session_state.editing_creator=selected_creator
