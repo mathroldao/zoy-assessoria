@@ -459,9 +459,12 @@ elif menu == "Influenciadores":
                 data = st.session_state.creators[name]
                 prefix = "→ " if name == st.session_state.selected_creator else ""
                 handle_label = data.get("handle", "")
-                if st.button(f"{prefix}{name}  ·  {handle_label}", key=f"select_{name}", use_container_width=True):
-                    st.session_state.selected_creator = name
-                    st.rerun()
+
+                button_label = f"{prefix}{handle_label}" if handle_label else f"{prefix}{name}"
+
+    if st.button(button_label, key=f"select_{name}", use_container_width=True):
+        st.session_state.selected_creator = name
+        st.rerun()
             st.markdown(f'<div class="creator-count">{len(st.session_state.creators)} influenciadores cadastrados</div>', unsafe_allow_html=True)
 
     if not names:
